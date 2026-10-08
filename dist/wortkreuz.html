@@ -1,0 +1,1775 @@
+<title>Wortkreuz Deutsch</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap">
+<style>
+/* Layout: eine Spalte wie eine Heftseite; im Spiel rückt die Hinweisliste auf breiten Schirmen neben das Gitter.
+   Hell = kariertes Schulheft mit königsblauer Tinte und Textmarker. Dunkel = grüne Schultafel mit Kreide. */
+:root {
+  --paper: #eef2f9; --grid: #d9e2f2; --sheet: #ffffff; --sheet-2: #f5f7fc;
+  --ink: #141b3d; --ink-2: #545e88; --rule: #c3cee5; --cell-line: #1d2757;
+  --accent: #2340c4; --on-accent: #ffffff; --accent-soft: #e2e8fb;
+  --marker: #ffe24a; --marker-soft: #fff6bd; --pencil: #3a4157;
+  --red: #c92837; --red-soft: #fde4e6; --green: #0f7d54; --green-soft: #d9f2e5; --gold: #e19a00;
+  --shadow: 0 1px 0 rgba(20, 27, 61, .08), 0 10px 24px -14px rgba(20, 27, 61, .35);
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11241e; --grid: #183128; --sheet: #1a352c; --sheet-2: #20403a;
+    --ink: #f2f5ec; --ink-2: #a9c0b3; --rule: #33594c; --cell-line: #7c9e8f;
+    --accent: #ffd866; --on-accent: #1b2a12; --accent-soft: #33503f;
+    --marker: #6b9c84; --marker-soft: #2b4c40; --pencil: #e6ede4;
+    --red: #ff9a9a; --red-soft: #4c2b2d; --green: #86e3ad; --green-soft: #1f4b39; --gold: #ffd866;
+    --shadow: 0 1px 0 rgba(0, 0, 0, .25), 0 10px 24px -14px rgba(0, 0, 0, .8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11241e; --grid: #183128; --sheet: #1a352c; --sheet-2: #20403a;
+  --ink: #f2f5ec; --ink-2: #a9c0b3; --rule: #33594c; --cell-line: #7c9e8f;
+  --accent: #ffd866; --on-accent: #1b2a12; --accent-soft: #33503f;
+  --marker: #6b9c84; --marker-soft: #2b4c40; --pencil: #e6ede4;
+  --red: #ff9a9a; --red-soft: #4c2b2d; --green: #86e3ad; --green-soft: #1f4b39; --gold: #ffd866;
+  --shadow: 0 1px 0 rgba(0, 0, 0, .25), 0 10px 24px -14px rgba(0, 0, 0, .8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; color: var(--ink); font: 16px/1.5 var(--body);
+  background: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px; -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; padding: 0; touch-action: manipulation; }
+button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; line-height: 1.15; }
+svg { display: block; }
+#app { max-width: 1000px; margin: 0 auto; padding-inline: 16px; padding-block: 14px 28px; min-height: 100%; }
+.screen { display: flex; flex-direction: column; gap: 18px; animation: rise .28s ease both; }
+@keyframes rise { from { opacity: .4; transform: translateY(6px); } }
+
+/* ---------- Bausteine ---------- */
+.bar { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.bar h1 { font-size: 1.25rem; flex: 1; min-width: 0; }
+.bar .sub { display: block; font: 400 .8rem var(--body); color: var(--ink-2); }
+.icon-btn { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--sheet); border: 1.5px solid var(--rule); flex: none; }
+.icon-btn:hover { border-color: var(--accent); }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px; background: var(--sheet); border: 1.5px solid var(--rule); font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chip svg { width: 16px; height: 16px; }
+.chip.flame svg { color: var(--red); } .chip.xp svg { color: var(--gold); }
+.card { background: var(--sheet); border: 1.5px solid var(--rule); border-radius: var(--r); padding: 16px; box-shadow: var(--shadow); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 18px; border-radius: 13px; font-weight: 700; background: var(--sheet); border: 1.5px solid var(--rule); text-align: left; }
+.btn svg { width: 20px; height: 20px; flex: none; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 60%, #000); transition: transform .08s, box-shadow .08s; }
+.btn.primary:active { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 60%, #000); }
+.btn.danger { color: var(--red); border-color: var(--red); }
+.btn[disabled] { opacity: .5; cursor: default; }
+.label { font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); font-weight: 700; }
+.meter { height: 10px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
+.meter > i { display: block; height: 100%; border-radius: 99px; background: var(--accent); transition: width .5s ease; }
+.stars { display: inline-flex; gap: 2px; color: var(--rule); }
+.stars svg { width: 18px; height: 18px; } .stars .on { color: var(--gold); }
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg button { min-width: 52px; min-height: 40px; padding: 6px 12px; border-radius: 11px; border: 1.5px solid var(--rule); background: var(--sheet); font-weight: 700; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.muted { color: var(--ink-2); } .small { font-size: .88rem; }
+
+/* ---------- Start ---------- */
+.home-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.wordmark { font: 800 1.15rem var(--display); letter-spacing: -.01em; }
+.hero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: center; }
+.logo { display: grid; grid-template-columns: repeat(4, 34px); grid-template-rows: repeat(5, 34px); gap: 3px; }
+.logo b { display: grid; place-items: center; background: var(--sheet); border: 2px solid var(--cell-line); border-radius: 6px; font: 800 1.15rem var(--display); }
+.logo b.x { background: var(--marker); color: #141b3d; border-color: #141b3d; }
+.hero h1 { font-size: clamp(1.7rem, 6vw, 2.5rem); font-weight: 800; letter-spacing: -.02em; }
+.hero p { color: var(--ink-2); max-width: 46ch; margin-top: 6px; }
+.play { width: 100%; justify-content: space-between; padding: 14px 18px; min-height: 64px; font-size: 1.1rem; }
+.play small { display: block; font-weight: 400; font-size: .85rem; opacity: .9; }
+.stage-card { display: flex; flex-direction: column; gap: 12px; }
+.stage-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.stage-head h2 { font-size: 1.15rem; }
+.duo { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
+.duo .card { display: flex; flex-direction: column; gap: 10px; }
+.duo h2 { font-size: 1.05rem; }
+.daily { text-align: left; width: 100%; }
+.daily:hover { border-color: var(--accent); }
+.daily .row, .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.tag { font-size: .78rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: var(--marker-soft); color: var(--ink); white-space: nowrap; }
+.tag.done { background: var(--green-soft); color: var(--green); }
+.menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.menu .btn { flex-direction: column; align-items: flex-start; gap: 0; }
+.menu .btn small { font-weight: 400; color: var(--ink-2); font-size: .82rem; }
+.note { font-size: .85rem; color: var(--ink-2); text-align: center; }
+
+/* ---------- Levelwahl ---------- */
+.levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 10px; }
+.lv { aspect-ratio: 1; border-radius: 14px; background: var(--sheet); border: 1.5px solid var(--rule); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; position: relative; }
+.lv b { font: 800 1.35rem var(--display); font-variant-numeric: tabular-nums; }
+.lv .stars svg { width: 13px; height: 13px; }
+.lv.done { background: var(--green-soft); border-color: var(--green); }
+.lv.next { border: 2.5px solid var(--accent); box-shadow: var(--shadow); }
+.lv.locked { opacity: .55; cursor: default; background: var(--sheet-2); }
+.lv.locked svg { width: 16px; height: 16px; color: var(--ink-2); }
+.lv em { position: absolute; top: 5px; right: 7px; font: 700 .62rem var(--body); color: var(--ink-2); font-style: normal; }
+
+/* ---------- Spiel ---------- */
+.game { display: grid; gap: 12px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "board" "lists" "dock"; }
+.board-wrap { grid-area: board; display: grid; place-items: center; padding: 6px 0; }
+.board { --size: min(46px, calc((100vw - 34px) / var(--cols))); display: grid; grid-template-columns: repeat(var(--cols), var(--size)); grid-auto-rows: var(--size); }
+.cell { position: relative; background: var(--sheet); border: 1.5px solid var(--cell-line); margin: -.75px; display: grid; place-items: center; font: 700 calc(var(--size) * .56) var(--display); color: var(--pencil); border-radius: 0; user-select: none; }
+.cell .n { position: absolute; top: 1px; left: 3px; font: 700 calc(var(--size) * .24) var(--body); color: var(--ink-2); line-height: 1.1; }
+.cell.sel { background: var(--marker-soft); }
+.cell.cur { background: var(--marker); z-index: 2; outline: 2.5px solid var(--accent); outline-offset: -2px; }
+.cell.ok { background: var(--green-soft); color: var(--green); }
+.cell.ok.sel { background: color-mix(in srgb, var(--green-soft) 70%, var(--marker)); }
+.cell.given { color: var(--accent); }
+.cell.bad { background: var(--red-soft); color: var(--red); }
+.cell.pop span { animation: pop .45s ease both; animation-delay: calc(var(--i) * 55ms); }
+.cell.shake { animation: shake .36s ease; }
+@keyframes pop { 40% { transform: scale(1.45) rotate(-6deg); } }
+@keyframes shake { 20%, 60% { transform: translateX(-4px); } 40%, 80% { transform: translateX(4px); } }
+.lists { grid-area: lists; }
+.lists summary { cursor: pointer; font-weight: 700; padding: 10px 14px; border-radius: 12px; background: var(--sheet); border: 1.5px solid var(--rule); list-style-position: inside; }
+.lists .cols { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); padding-top: 12px; }
+.lists ol { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.lists li button { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px; width: 100%; text-align: left; padding: 7px 8px; border-radius: 9px; font-size: .92rem; line-height: 1.35; }
+.lists li button:hover { background: var(--accent-soft); }
+.lists li button b { font-variant-numeric: tabular-nums; }
+.lists li.on button { background: var(--marker-soft); }
+.lists li.done button { color: var(--green); }
+.lists li.done button > span::after { content: " ✓"; font-weight: 700; }
+.dock { grid-area: dock; position: sticky; bottom: 0; z-index: 5; background: var(--paper); padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px)); border-top: 1.5px solid var(--rule); display: flex; flex-direction: column; gap: 8px; }
+.clue { background: var(--sheet); border: 1.5px solid var(--rule); border-radius: 13px; padding: 10px 12px; display: flex; flex-direction: column; gap: 4px; min-height: 76px; }
+.clue .meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: .76rem; color: var(--ink-2); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.clue .meta b { color: var(--on-accent); background: var(--accent); padding: 1px 8px; border-radius: 99px; letter-spacing: 0; }
+.clue .text { font-size: 1.04rem; line-height: 1.35; font-weight: 600; }
+.clue .extra { font-size: .92rem; color: var(--ink-2); border-left: 3px solid var(--marker); padding-left: 8px; }
+.fb { font-size: .92rem; font-weight: 600; padding: 7px 10px; border-radius: 10px; }
+.fb.good { background: var(--green-soft); color: var(--green); }
+.fb.bad { background: var(--red-soft); color: var(--red); }
+.fb.info { background: var(--accent-soft); }
+.tools { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.tools .btn { min-height: 40px; padding: 6px 8px; font-size: .9rem; border-radius: 11px; }
+.tools svg { width: 16px; height: 16px; flex: none; }
+.kb { display: flex; flex-direction: column; gap: 5px; }
+.kb div { display: flex; gap: 4px; justify-content: center; }
+.kb button { flex: 1 1 0; min-width: 0; max-width: 46px; height: 44px; border-radius: 8px; background: var(--sheet); border: 1.5px solid var(--rule); border-bottom-width: 3px; font: 700 1rem var(--display); }
+.kb button:active { background: var(--marker); color: #141b3d; transform: translateY(1px); }
+.kb button.wide { flex: 1.6 1 0; max-width: 74px; display: grid; place-items: center; }
+.kb button.wide svg { width: 20px; height: 20px; }
+.kb.mini div { justify-content: flex-start; } .kb.mini button { height: 38px; max-width: 44px; }
+.kb.mini span { align-self: center; font-size: .82rem; color: var(--ink-2); margin-right: 4px; }
+@media (min-width: 880px) {
+  .game { grid-template-columns: minmax(0, 1fr) 330px; grid-template-areas: "board lists" "dock lists"; align-items: start; column-gap: 22px; }
+  .board { --size: min(48px, calc(560px / var(--cols))); }
+  .dock { position: static; border-top: 0; background: none; }
+  .lists summary { display: none; }
+  .lists .cols { grid-template-columns: 1fr; padding-top: 0; }
+  .lists { background: var(--sheet); border: 1.5px solid var(--rule); border-radius: var(--r); padding: 14px; }
+}
+
+/* ---------- Ergebnis ---------- */
+.result { align-items: center; text-align: center; }
+.result > * { width: 100%; max-width: 620px; }
+.result .big { display: flex; justify-content: center; gap: 8px; color: var(--rule); }
+.result .big svg { width: 62px; height: 62px; }
+.result .big .on { color: var(--gold); animation: star .5s cubic-bezier(.2, 1.6, .4, 1) both; animation-delay: calc(var(--i) * 180ms + 150ms); }
+@keyframes star { from { transform: scale(0) rotate(-40deg); opacity: 0; } }
+.result h1 { font-size: 2rem; font-weight: 800; }
+.gains { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.unlock { display: flex; gap: 12px; align-items: center; text-align: left; background: var(--marker-soft); border-color: var(--gold); }
+.unlock svg { width: 30px; height: 30px; color: var(--gold); flex: none; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.actions .btn { flex: 1 1 180px; }
+.review { text-align: left; display: flex; flex-direction: column; gap: 0; padding: 6px 16px; }
+.w { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 11px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+.w:last-child { border-bottom: 0; }
+.w h3 { font-size: 1.08rem; } .w h3 i { font-style: normal; font-weight: 500; color: var(--accent); }
+.w .en { color: var(--ink-2); font-size: .9rem; }
+.w .ex { grid-column: 1 / -1; font-size: .93rem; } .w .ex b { background: var(--marker-soft); padding: 0 3px; border-radius: 4px; }
+.w .st { grid-column: 1 / -1; font-size: .8rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.hard { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; border: 1.5px solid var(--rule); color: var(--ink-2); }
+.hard svg { width: 19px; height: 19px; }
+.hard[aria-pressed="true"] { background: var(--red-soft); color: var(--red); border-color: var(--red); }
+.confetti { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 20; }
+.confetti i { position: absolute; top: -20px; width: 9px; height: 14px; border-radius: 2px; animation: fall 1.9s ease-in forwards; }
+@keyframes fall { to { transform: translateY(105vh) rotate(540deg); opacity: .2; } }
+
+/* ---------- Listen, Erfolge, Einstellungen ---------- */
+.filters { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.awards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.award { display: flex; gap: 11px; align-items: center; padding: 12px; border-radius: 13px; background: var(--sheet-2); border: 1.5px dashed var(--rule); color: var(--ink-2); }
+.award svg { width: 28px; height: 28px; flex: none; }
+.award b { display: block; font-family: var(--display); } .award span { font-size: .84rem; }
+.award.on { background: var(--sheet); border: 1.5px solid var(--gold); color: var(--ink); } .award.on svg { color: var(--gold); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+.facts div { background: var(--sheet); border: 1.5px solid var(--rule); border-radius: 13px; padding: 10px 12px; }
+.facts b { display: block; font: 800 1.5rem var(--display); font-variant-numeric: tabular-nums; }
+.facts span { font-size: .82rem; color: var(--ink-2); }
+.set { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; padding: 13px 0; border-bottom: 1px solid var(--rule); }
+.set:last-child { border-bottom: 0; }
+.set > div:first-child { flex: 1 1 220px; min-width: 0; } .set p { font-size: .86rem; color: var(--ink-2); }
+.switch { width: 54px; height: 32px; border-radius: 99px; background: var(--rule); position: relative; flex: none; transition: background .15s; }
+.switch::after { content: ""; position: absolute; top: 4px; left: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--sheet); transition: transform .15s; }
+.switch[aria-checked="true"] { background: var(--accent); } .switch[aria-checked="true"]::after { transform: translateX(22px); }
+.empty { text-align: center; padding: 26px 16px; color: var(--ink-2); }
+
+@media (max-width: 520px) {
+  .hero { gap: 14px; }
+  .logo { grid-template-columns: repeat(4, 24px); grid-template-rows: repeat(5, 24px); gap: 2px; }
+  .logo b { font-size: .82rem; border-width: 1.5px; border-radius: 4px; }
+  .tools .btn span.long { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.sysin { position: fixed; top: 30%; left: 0; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; font-size: 16px; background: transparent; color: transparent; caret-color: transparent; }
+</style>
+<div id="app"></div>
+<script>
+/* ===== core.js ===== */
+/* ============================================================
+   core.js – Namensraum, Lernstufen, Wort-Parser, Zufall
+   ============================================================ */
+var KW = globalThis.KW = globalThis.KW || {};
+
+/* Lernstufen. Neue Stufe = neuer Eintrag hier + eine Datendatei. */
+KW.STAGES = [
+  { id: 'A1', name: 'Anfänger',            blurb: 'Alltagswörter, Farben, Zahlen, Essen, Familie', levels: 20, words: [5, 6], clue: { en: 4, def: 3, ex: 3 } },
+  { id: 'A2', name: 'Grundkenntnisse',     blurb: 'Wohnen, Wetter, Reisen, häufige Verben',        levels: 20, words: [6, 7], clue: { en: 2, def: 4, ex: 4 } },
+  { id: 'B1', name: 'Mittelstufe',         blurb: 'Arbeit, Behörden, Gefühle, Umschreibungen',     levels: 20, words: [6, 7], clue: { en: 0, def: 6, ex: 4 } },
+  { id: 'B2', name: 'Fortgeschritten',     blurb: 'Abstrakte Begriffe und Redewendungen',          levels: 20, words: [7, 8], clue: { en: 0, def: 7, ex: 3 } },
+  { id: 'C1', name: 'Sehr fortgeschritten', blurb: 'Seltene Wörter, Idiomatik, feine Unterschiede', levels: 20, words: [7, 8], clue: { en: 0, def: 7, ex: 3 } }
+];
+KW.stage = id => KW.STAGES.find(s => s.id === id);
+
+KW.WORDS = {};      // Stufe -> Wortobjekte
+KW.WORD_INDEX = {}; // Lösung (GROSS) -> Wortobjekt
+
+/* Großschreibung, die das ß erhält ('ß'.toUpperCase() wäre 'SS'). */
+KW.upper = s => Array.from(s).map(ch => ch === 'ß' ? 'ß' : ch.toUpperCase()).join('');
+KW.isLetter = ch => /^[A-ZÄÖÜß]$/.test(ch);
+
+/* Zeilenformat: [Artikel ]Wort|Englisch|Umschreibung|Beispielsatz mit ___ */
+KW.addWords = function (stageId, text) {
+  const list = KW.WORDS[stageId] = KW.WORDS[stageId] || [];
+  text.split('\n').map(l => l.trim()).filter(l => l && !l.startsWith('#')).forEach(line => {
+    const [head, en, def, ex] = line.split('|').map(s => (s || '').trim());
+    const m = head.match(/^(der|die|das)\s+(.+)$/);
+    const lemma = m ? m[2] : head;
+    const w = { lemma, article: m ? m[1] : '', answer: KW.upper(lemma), en, def, ex, stage: stageId };
+    w.kind = w.article ? 'Nomen' : (/^[a-zäöü]/.test(lemma) && /e[lr]?n$/.test(lemma) && lemma.length > 3 && !KW.NOT_VERBS.has(lemma) ? 'Verb' : 'Wort');
+    list.push(w);
+    if (!KW.WORD_INDEX[w.answer]) KW.WORD_INDEX[w.answer] = w;
+  });
+};
+KW.NOT_VERBS = new Set(['sieben', 'zehn', 'neun', 'bescheiden', 'gelassen', 'umstritten', 'angemessen', 'zufrieden', 'verschroben', 'unverhohlen', 'nüchtern', 'hanebüchen', 'anstrengend', 'teuer', 'dunkel', 'sauber', 'heikel', 'penibel']);
+KW.display = w => (w.article ? w.article + ' ' : '') + w.lemma;
+
+/* Deterministischer Zufall: gleiche Saat -> gleiches Rätsel auf jedem Gerät. */
+KW.hash = function (str) {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+};
+KW.rng = function (seed) {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+};
+KW.shuffle = function (arr, rand) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+};
+KW.today = function (d) {
+  d = d || new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+};
+
+/* ===== data/a1.js ===== */
+/* A1 – Anfänger. Eine Zeile pro Wort:  [Artikel ]Wort|Englisch|Umschreibung|Beispielsatz mit ___  */
+KW.addWords('A1', `
+die Mutter|mother|Die Mama|Meine ___ heißt Anna und mein Vater heißt Paul.
+der Vater|father|Der Papa|Mein ___ und meine Mutter wohnen in Berlin.
+der Bruder|brother|Der Sohn von meinen Eltern ist mein …|Ich habe eine Schwester und einen ___.
+das Kind|child|Ein junger Mensch, noch nicht erwachsen|Das ___ ist fünf Jahre alt und geht in den Kindergarten.
+die Oma|grandma|Die Mutter von Mama oder Papa|Meine ___ ist 80 Jahre alt, mein Opa ist 82.
+die Tante|aunt|Die Schwester von Mama oder Papa|Meine ___ ist die Schwester von meiner Mutter.
+der Onkel|uncle|Der Bruder von Mama oder Papa|Mein ___ ist der Bruder von meinem Vater.
+der Sohn|son|Ein Junge ist der … von seinen Eltern|Sie haben eine Tochter und einen ___.
+der Freund|friend|Ein Mensch, den ich sehr gern habe|Tom ist mein bester ___.
+die Frau|woman|Eine erwachsene Person, kein Mann|Die ___ dort ist meine Lehrerin.
+der Mann|man|Eine erwachsene Person, keine Frau|Der ___ dort ist mein Lehrer.
+das Brot|bread|Man kauft es beim Bäcker und isst es zum Frühstück|Ich kaufe ein ___ beim Bäcker.
+der Käse|cheese|Ein Essen aus Milch, oft gelb|Ich esse ein Brötchen mit Butter und ___.
+der Apfel|apple|Ein Obst, rot oder grün, wächst am Baum|Der ___ ist rot und süß.
+die Milch|milk|Ein weißes Getränk von der Kuh|Ich trinke Kaffee mit ___ und Zucker.
+das Wasser|water|Man trinkt es. Es hat keine Farbe.|Ein Glas ___, bitte!
+der Kaffee|coffee|Ein heißes, schwarzes Getränk am Morgen|Am Morgen trinke ich eine Tasse ___.
+der Tee|tea|Ein heißes Getränk, grün oder schwarz|Möchtest du Kaffee oder ___?
+die Suppe|soup|Ein warmes Essen. Man isst es mit dem Löffel.|Die ___ ist noch sehr heiß.
+der Reis|rice|Kleine weiße Körner zum Essen|Wir essen heute Hähnchen mit ___.
+der Fisch|fish|Ein Tier. Es lebt im Wasser.|Der ___ schwimmt im Wasser.
+das Salz|salt|Es ist weiß. Man gibt es in die Suppe.|Die Suppe braucht noch ___ und Pfeffer.
+der Zucker|sugar|Es ist weiß und süß|Nimmst du ___ in den Tee?
+die Butter|butter|Man macht sie aus Milch und isst sie auf Brot|Ich esse Brot mit ___ und Marmelade.
+die Banane|banana|Ein Obst, lang und gelb|Die ___ ist lang und gelb.
+der Kuchen|cake|Ein süßes Essen, zum Beispiel zum Geburtstag|Zum Geburtstag backe ich einen ___.
+das Obst|fruit|Äpfel und Bananen sind …|Äpfel, Birnen und Bananen sind ___.
+das Gemüse|vegetables|Tomaten und Karotten sind …|Karotten und Tomaten sind ___.
+der Saft|juice|Ein Getränk aus Obst|Ich trinke gern ___ aus Orangen.
+die Wurst|sausage|Ein Essen aus Fleisch, oft auf Brot|Zum Frühstück gibt es Brot, Käse und ___.
+die Tomate|tomato|Ein rotes, rundes Gemüse|Die ___ ist rot und rund.
+rot|red|Die Farbe von Tomaten|Die Tomate ist ___.
+blau|blue|Die Farbe vom Himmel|Der Himmel ist heute ___.
+grün|green|Die Farbe von Gras|Das Gras ist ___.
+gelb|yellow|Die Farbe von Bananen|Die Banane ist ___.
+schwarz|black|Die Farbe von der Nacht|Ich trinke meinen Kaffee ___, ohne Milch.
+weiß|white|Die Farbe von Schnee|Der Schnee ist ___.
+braun|brown|Die Farbe von Schokolade|Schokolade ist ___.
+eins|one|Die Zahl 1|Null, ___, zwei, drei.
+zwei|two|Die Zahl 2|Ich habe ___ Hände und zehn Finger.
+drei|three|Die Zahl 3|Eins, zwei, ___, vier.
+vier|four|Die Zahl 4|Ein Auto hat ___ Räder.
+fünf|five|Die Zahl 5|Eine Hand hat ___ Finger.
+sechs|six|Die Zahl 6|Drei plus drei ist ___.
+sieben|seven|Die Zahl 7|Die Woche hat ___ Tage.
+acht|eight|Die Zahl 8|Vier plus vier ist ___.
+neun|nine|Die Zahl 9|Sieben, acht, ___, zehn.
+zehn|ten|Die Zahl 10|Fünf plus fünf ist ___.
+das Haus|house|Ein Gebäude. Dort wohnt man.|Wir wohnen in einem kleinen ___ mit Garten.
+die Tür|door|Man öffnet sie und geht in das Zimmer|Bitte mach die ___ zu, es ist kalt!
+der Tisch|table|Ein Möbel. Man isst daran.|Das Essen steht schon auf dem ___.
+der Stuhl|chair|Ein Möbel zum Sitzen|Setz dich bitte auf den ___.
+das Bett|bed|Ein Möbel zum Schlafen|Ich bin müde und gehe ins ___.
+die Lampe|lamp|Sie macht Licht im Zimmer|Es ist dunkel. Mach bitte die ___ an.
+das Buch|book|Man kann es lesen. Es hat viele Seiten.|Ich lese ein ___ über Deutschland.
+der Stift|pen|Man schreibt damit|Ich schreibe mit einem ___ auf Papier.
+die Tasche|bag|Darin trägt man Sachen|Mein Handy ist in meiner ___.
+die Uhr|clock|Sie zeigt die Zeit|Wie viel ___ ist es?
+das Auto|car|Es hat vier Räder und fährt auf der Straße|Wir fahren mit dem ___ nach Hamburg.
+der Bus|bus|Ein großes Fahrzeug für viele Personen|Ich fahre mit dem ___ zur Arbeit.
+der Zug|train|Er fährt auf Schienen von Bahnhof zu Bahnhof|Der ___ nach München fährt um 9 Uhr ab.
+die Schule|school|Dort lernen Kinder|Die Kinder gehen um acht Uhr in die ___.
+die Arbeit|work|Man macht sie von Montag bis Freitag und bekommt Geld|Ich gehe jeden Morgen zur ___.
+die Stadt|city|Ein großer Ort mit vielen Häusern|Berlin ist eine große ___.
+die Straße|street|Dort fahren Autos|Die Kinder spielen nicht auf der ___.
+das Geld|money|Man braucht es zum Einkaufen|Ich habe kein ___ dabei.
+das Handy|mobile phone|Ein kleines Telefon für die Tasche|Ich rufe dich mit dem ___ an.
+das Zimmer|room|Ein Raum in der Wohnung|Die Wohnung hat nur ein ___.
+die Küche|kitchen|In diesem Raum kocht man|Wir kochen zusammen in der ___.
+das Fenster|window|Es ist aus Glas. Man sieht nach draußen.|Mach bitte das ___ auf, es ist warm.
+der Garten|garden|Ein Platz am Haus mit Blumen und Gras|Die Kinder spielen im ___.
+der Hund|dog|Ein Haustier. Es macht „Wau“.|Ich gehe mit dem ___ spazieren.
+die Katze|cat|Ein Haustier. Es macht „Miau“.|Die ___ trinkt Milch.
+der Vogel|bird|Ein Tier. Es kann fliegen.|Der ___ singt im Baum.
+der Baum|tree|Eine große Pflanze mit Blättern|Der Apfel hängt am ___.
+die Blume|flower|Eine schöne Pflanze mit Farben|Ich schenke meiner Mutter eine ___.
+die Sonne|sun|Sie scheint am Tag am Himmel|Heute scheint die ___.
+der Regen|rain|Wasser, das vom Himmel fällt|Bei ___ nehme ich einen Schirm mit.
+der Tag|day|24 Stunden|Guten ___, Frau Müller!
+die Nacht|night|Die dunkle Zeit. Man schläft.|Gute ___, schlaf gut!
+der Morgen|morning|Der Anfang vom Tag|Guten ___! Möchtest du Kaffee?
+der Abend|evening|Die Zeit nach dem Nachmittag|Guten ___! Am ___ sehe ich fern.
+die Woche|week|Sieben Tage|Die ___ hat sieben Tage.
+der Monat|month|Januar ist ein …|Der Januar ist der erste ___ im Jahr.
+das Jahr|year|Zwölf Monate|Ein ___ hat zwölf Monate.
+der Kopf|head|Der Teil vom Körper ganz oben|Ich trage einen Hut auf dem ___.
+die Hand|hand|Sie hat fünf Finger|Ich schreibe mit der linken ___.
+der Fuß|foot|Der Teil vom Körper im Schuh|Ich gehe zu ___ zur Schule.
+das Auge|eye|Damit sieht man|Mach ein ___ zu!
+die Nase|nose|Damit riecht man|Meine ___ läuft, ich bin erkältet.
+der Mund|mouth|Damit isst und spricht man|Bitte nicht mit vollem ___ sprechen!
+die Hose|trousers|Kleidung für die Beine|Die Jeans ist eine blaue ___.
+das Hemd|shirt|Kleidung für oben, oft für Männer im Büro|Er trägt ein weißes ___ und eine Krawatte.
+der Schuh|shoe|Man trägt ihn am Fuß|Wo ist mein linker ___?
+die Jacke|jacket|Kleidung für draußen, wenn es kalt ist|Es ist kalt. Zieh eine ___ an!
+gehen|to go|Zu Fuß von A nach B kommen|Wir ___ heute ins Kino.
+kommen|to come|„Woher … Sie?“ – „Aus Spanien.“|Woher ___ Sie? – Aus Italien.
+essen|to eat|Das macht man mit Brot, Reis oder Suppe|Wir ___ um 12 Uhr zu Mittag.
+trinken|to drink|Das macht man mit Wasser, Tee oder Saft|Wir ___ zusammen einen Kaffee.
+lesen|to read|Das macht man mit einem Buch|Wir ___ im Kurs einen Text.
+lernen|to learn|Das macht man in der Schule|Wir ___ zusammen Deutsch.
+spielen|to play|Das machen Kinder gern, zum Beispiel Fußball|Die Kinder ___ im Garten Fußball.
+kaufen|to buy|Geld geben und etwas bekommen|Wir ___ Brot und Milch im Supermarkt.
+wohnen|to live|Ein Zuhause haben|Wir ___ in einer kleinen Wohnung in Köln.
+machen|to do|„Was … Sie beruflich?“|Was ___ wir am Wochenende?
+haben|to have|„Wir … zwei Kinder.“|Wir ___ zwei Kinder und einen Hund.
+sehen|to see|Das macht man mit den Augen|Wir ___ am Abend einen Film.
+hören|to hear|Das macht man mit den Ohren|Wir ___ gern Musik.
+sagen|to say|Mit Worten sprechen|Können Sie das bitte noch einmal ___?
+fragen|to ask|Etwas wissen wollen und sprechen|Darf ich Sie etwas ___?
+helfen|to help|Etwas für eine andere Person tun|Können Sie mir bitte ___?
+kochen|to cook|Essen warm machen|Heute ___ wir Spaghetti.
+laufen|to run|Schnell gehen|Die Kinder ___ schnell durch den Park.
+geben|to give|„Können Sie mir bitte das Salz …?“|Können Sie mir bitte das Salz ___?
+nehmen|to take|„Ich möchte den Bus …“|Wir ___ den Bus um acht Uhr.
+heißen|to be called|Einen Namen haben|Wie ___ Sie? – Ich bin Frau Kaya.
+arbeiten|to work|Im Büro oder in der Fabrik etwas tun|Wir ___ von Montag bis Freitag.
+schlafen|to sleep|Das macht man in der Nacht im Bett|Kinder müssen viel ___.
+groß|big|Nicht klein|Ein Elefant ist sehr ___.
+klein|small|Nicht groß|Eine Maus ist sehr ___.
+gut|good|Nicht schlecht|Wie geht es dir? – Danke, ___!
+alt|old|Nicht jung, nicht neu|Mein Opa ist schon sehr ___.
+neu|new|Nicht alt|Mein Handy ist ganz ___.
+kalt|cold|Nicht warm|Im Winter ist es ___.
+warm|warm|Nicht kalt|Im Sommer ist es ___.
+heiß|hot|Sehr, sehr warm|Vorsicht, der Tee ist sehr ___!
+schön|beautiful|Sieht sehr gut aus|Die Blumen sind sehr ___.
+müde|tired|Man möchte schlafen|Ich bin ___ und gehe ins Bett.
+teuer|expensive|Kostet viel Geld|Das Auto kostet 50.000 Euro. Das ist ___!
+billig|cheap|Kostet wenig Geld|Das T-Shirt kostet nur 3 Euro. Das ist ___!
+`);
+
+/* ===== data/a2.js ===== */
+/* A2 – Grundkenntnisse */
+KW.addWords('A2', `
+das Wetter|weather|Sonne, Regen, Wind und Schnee|Wie wird das ___ morgen? – Es regnet.
+der Urlaub|holiday|Freie Tage, an denen man nicht arbeitet|Im Sommer machen wir zwei Wochen ___ in Italien.
+der Koffer|suitcase|Darin transportiert man Kleidung auf einer Reise|Ich packe meinen ___ für die Reise.
+der Bahnhof|train station|Dort fahren Züge ab|Der Zug kommt um 15 Uhr am ___ an.
+das Fahrrad|bicycle|Ein Fahrzeug mit zwei Rädern ohne Motor|Ich fahre mit dem ___ zur Arbeit.
+die Ampel|traffic light|Sie zeigt Rot, Gelb oder Grün|Die ___ ist rot, wir müssen warten.
+die Brücke|bridge|Auf ihr geht oder fährt man über einen Fluss|Wir gehen über die ___ auf die andere Seite.
+das Geschäft|shop|Dort kann man etwas kaufen|Das ___ ist von 9 bis 18 Uhr geöffnet.
+die Kasse|checkout|Dort bezahlt man im Supermarkt|Bitte bezahlen Sie an der ___.
+der Preis|price|So viel kostet etwas|Der ___ für das Ticket ist sehr hoch.
+die Rechnung|bill|Auf diesem Papier steht, wie viel man bezahlen muss|Herr Ober, die ___ bitte!
+der Kellner|waiter|Er bringt im Restaurant das Essen|Der ___ bringt uns die Speisekarte.
+die Gabel|fork|Besteck mit Spitzen, liegt links vom Teller|Man isst mit Messer und ___.
+das Messer|knife|Damit schneidet man Brot oder Fleisch|Ich schneide das Brot mit dem ___.
+der Löffel|spoon|Damit isst man Suppe|Für die Suppe brauche ich einen ___.
+der Teller|plate|Darauf liegt das Essen|Auf dem ___ liegen Kartoffeln und Fisch.
+das Glas|glass|Daraus trinkt man Wasser oder Saft|Ich möchte ein ___ Wasser, bitte.
+die Flasche|bottle|Darin kauft man Wasser oder Wein|Wir bestellen eine ___ Wein.
+der Herd|stove|Darauf kocht man in der Küche|Der Topf steht auf dem ___.
+die Dusche|shower|Dort wäscht man sich im Stehen|Morgens gehe ich zuerst unter die ___.
+die Seife|soap|Damit wäscht man die Hände|Wasch dir die Hände mit ___!
+das Handtuch|towel|Damit macht man sich nach dem Duschen trocken|Nach dem Duschen brauche ich ein ___.
+der Spiegel|mirror|Darin sieht man sich selbst|Sie schaut in den ___ und kämmt sich.
+der Schrank|wardrobe|Ein Möbel für Kleidung oder Geschirr|Deine Jacke hängt im ___.
+der Teppich|carpet|Er liegt auf dem Boden und ist weich|Im Wohnzimmer liegt ein roter ___.
+die Wohnung|flat|Mehrere Zimmer in einem Haus, in denen man lebt|Wir suchen eine ___ mit drei Zimmern.
+die Miete|rent|Das Geld, das man jeden Monat für die Wohnung bezahlt|Die ___ für die Wohnung ist 800 Euro im Monat.
+der Nachbar|neighbour|Der Mann, der im Haus nebenan wohnt|Unser ___ ist sehr nett und hilft uns oft.
+der Schlüssel|key|Damit öffnet man die Tür|Ich kann die Tür nicht öffnen, ich habe meinen ___ vergessen.
+die Treppe|stairs|Darauf geht man in den ersten Stock|Der Aufzug ist kaputt, wir nehmen die ___.
+der Keller|cellar|Der Raum ganz unten im Haus|Die Waschmaschine steht unten im ___.
+das Dach|roof|Der oberste Teil von einem Haus|Auf dem ___ sitzt ein Vogel.
+der Arzt|doctor|Zu ihm geht man, wenn man krank ist|Du hast Fieber, du musst zum ___ gehen.
+die Apotheke|pharmacy|Dort kauft man Medikamente|Ich hole die Tabletten in der ___.
+das Fieber|fever|Der Körper ist zu warm, über 38 Grad|Das Kind hat 39 Grad ___.
+der Husten|cough|Bei einer Erkältung kommt er aus dem Hals|Ich habe Schnupfen und ___.
+der Zahn|tooth|Er ist weiß und hart, man hat 32 im Mund|Mir tut ein ___ weh, ich muss zum Zahnarzt.
+der Rücken|back|Die hintere Seite vom Körper|Ich sitze zu viel, mein ___ tut weh.
+das Bein|leg|Der Körperteil zwischen Fuß und Bauch|Er hat sich beim Fußball das ___ gebrochen.
+der Bauch|belly|Dort ist der Magen|Ich habe zu viel gegessen, mein ___ tut weh.
+das Gesicht|face|Augen, Nase und Mund sind im …|Sie wäscht sich das ___ mit kaltem Wasser.
+der Körper|body|Kopf, Arme, Beine und Bauch zusammen|Sport ist gut für den ___.
+der Termin|appointment|Eine feste Zeit für ein Treffen, zum Beispiel beim Arzt|Ich habe um 10 Uhr einen ___ beim Zahnarzt.
+das Büro|office|Dort arbeitet man am Schreibtisch|Sie arbeitet in einem ___ in der Stadt.
+der Kollege|colleague|Ein Mann, der in derselben Firma arbeitet|Mein ___ hilft mir bei der Arbeit.
+der Beruf|profession|Lehrerin oder Koch ist ein …|Was sind Sie von ___? – Ich bin Koch.
+die Pause|break|Eine kurze Zeit ohne Arbeit oder Unterricht|Um zwölf Uhr machen wir eine ___.
+der Brief|letter|Man schreibt ihn auf Papier und schickt ihn mit der Post|Ich schreibe meiner Oma einen ___.
+das Paket|parcel|Ein Karton, den die Post bringt|Die Post bringt heute ein ___ für dich.
+die Antwort|answer|Das sagt man nach einer Frage|Ich warte noch auf eine ___ auf meine E-Mail.
+der Fehler|mistake|Etwas, das nicht richtig ist|In diesem Satz ist ein ___.
+die Prüfung|exam|Ein Test am Ende von einem Kurs|Morgen schreibe ich eine wichtige ___.
+die Sprache|language|Deutsch ist eine …|Deutsch ist eine schwierige ___.
+der Satz|sentence|Mehrere Wörter mit einem Punkt am Ende|Bitte schreiben Sie einen ganzen ___.
+das Geschenk|present|Das bekommt man zum Geburtstag|Ich brauche noch ein ___ für meine Schwester.
+die Feier|party|Ein Fest mit Gästen|Die ___ beginnt um 19 Uhr.
+die Hochzeit|wedding|Das Fest, wenn zwei Menschen heiraten|Zur ___ kommen 80 Gäste.
+der Gast|guest|Eine Person, die man eingeladen hat|Heute Abend kommt ein ___ zum Essen.
+das Kleid|dress|Kleidung für Frauen, oben und unten in einem Stück|Sie trägt ein rotes ___.
+der Mantel|coat|Eine lange Jacke für den Winter|Im Winter trage ich einen warmen ___.
+die Mütze|cap|Sie hält den Kopf im Winter warm|Setz eine ___ auf, es schneit!
+der Schal|scarf|Man trägt ihn im Winter um den Hals|Ich trage einen ___ um den Hals.
+der Sommer|summer|Die warme Jahreszeit|Im ___ gehen wir oft schwimmen.
+der Winter|winter|Die kalte Jahreszeit|Im ___ fällt Schnee.
+der Herbst|autumn|Die Jahreszeit, in der die Blätter fallen|Im ___ werden die Blätter bunt.
+die Wolke|cloud|Sie ist weiß oder grau und am Himmel|Am Himmel ist keine einzige ___.
+der Schnee|snow|Er ist weiß und fällt im Winter|Die Kinder bauen einen Mann aus ___.
+der Wind|wind|Luft, die sich schnell bewegt|An der Nordsee weht oft ein starker ___.
+der Berg|mountain|Er ist sehr hoch, zum Beispiel die Zugspitze|Wir steigen auf einen hohen ___.
+das Meer|sea|Sehr viel Salzwasser|Wir fahren im Urlaub ans ___.
+der Strand|beach|Sand direkt am Wasser|Die Kinder spielen am ___ im Sand.
+die Insel|island|Land mit Wasser auf allen Seiten|Sylt ist eine ___ in der Nordsee.
+der Wald|forest|Ein Ort mit sehr vielen Bäumen|Wir gehen im ___ spazieren.
+der Fluss|river|Der Rhein ist ein …|Der Rhein ist ein langer ___.
+das Dorf|village|Ein kleiner Ort auf dem Land|Meine Großeltern leben in einem kleinen ___.
+besuchen|to visit|Zu einer Person gehen und Zeit mit ihr verbringen|Am Sonntag ___ wir unsere Großeltern.
+bezahlen|to pay|Geld für etwas geben|Kann ich mit Karte ___?
+bestellen|to order|Im Restaurant sagen, was man essen möchte|Wir möchten gern ___. – Was darf es sein?
+öffnen|to open|Aufmachen|Können Sie bitte das Fenster ___?
+schließen|to close|Zumachen|Bitte ___ Sie die Tür leise.
+warten|to wait|An einem Ort bleiben, bis etwas passiert|Wir ___ seit 20 Minuten auf den Bus.
+suchen|to look for|Etwas finden wollen|Wir ___ eine neue Wohnung.
+finden|to find|Etwas sehen, das man gesucht hat|Ich kann meine Brille nicht ___.
+vergessen|to forget|Nicht mehr an etwas denken|Ich darf den Termin nicht ___.
+erklären|to explain|Sagen, wie etwas funktioniert|Können Sie mir das Wort ___?
+verstehen|to understand|Wissen, was etwas bedeutet|Entschuldigung, ich kann Sie nicht ___.
+anrufen|to call|Mit dem Telefon sprechen wollen|Ich möchte heute meine Eltern ___.
+aufstehen|to get up|Am Morgen das Bett verlassen|Ich muss jeden Tag um 6 Uhr ___.
+putzen|to clean|Sauber machen|Am Samstag ___ wir die Wohnung.
+waschen|to wash|Mit Wasser und Seife sauber machen|Ich muss noch meine Wäsche ___.
+tragen|to carry|Etwas in der Hand oder am Körper haben|Kannst du die Tasche ___? Sie ist schwer.
+bringen|to bring|Etwas zu einer Person transportieren|Können Sie mir bitte die Speisekarte ___?
+schicken|to send|Einen Brief oder eine E-Mail an jemanden geben|Ich möchte dir ein Foto ___.
+reisen|to travel|In ein anderes Land fahren|Wir ___ gern in fremde Länder.
+schwimmen|to swim|Sich im Wasser bewegen|Im Sommer ___ wir im See.
+tanzen|to dance|Sich zu Musik bewegen|Auf der Party ___ alle Gäste.
+singen|to sing|Mit der Stimme Musik machen|Zum Geburtstag ___ wir ein Lied.
+lachen|to laugh|Das macht man, wenn etwas lustig ist|Über den Witz müssen alle ___.
+weinen|to cry|Das macht man, wenn man traurig ist|Das Baby hört nicht auf zu ___.
+schnell|fast|Nicht langsam|Der ICE fährt sehr ___.
+langsam|slow|Nicht schnell|Bitte sprechen Sie ___, ich lerne noch Deutsch.
+laut|loud|Nicht leise|Die Musik ist zu ___, ich verstehe nichts.
+leise|quiet|Nicht laut|Seid bitte ___, das Baby schläft.
+hell|bright|Mit viel Licht|Im Sommer ist es abends lange ___.
+dunkel|dark|Ohne Licht|Im Winter ist es schon um 17 Uhr ___.
+sauber|clean|Ohne Schmutz|Die Küche ist nach dem Putzen wieder ___.
+schmutzig|dirty|Nicht sauber|Deine Schuhe sind ___, zieh sie bitte aus.
+gesund|healthy|Nicht krank|Obst und Gemüse sind ___.
+krank|ill|Nicht gesund|Er liegt im Bett, er ist ___.
+lustig|funny|Man muss lachen|Der Film war sehr ___, wir haben viel gelacht.
+traurig|sad|Nicht fröhlich|Sie ist ___, weil ihre Katze weg ist.
+pünktlich|on time|Genau zur richtigen Zeit|Der Zug kommt heute ___ um 8:15 Uhr.
+freundlich|friendly|Nett zu anderen Menschen|Die Verkäuferin ist sehr ___ und hilft gern.
+wichtig|important|Von großer Bedeutung|Die Prüfung ist sehr ___ für mich.
+einfach|easy|Nicht schwer|Die Aufgabe ist ganz ___.
+schwierig|difficult|Nicht leicht|Die deutsche Grammatik ist manchmal ___.
+leer|empty|Nichts ist drin|Die Flasche ist ___, wir brauchen eine neue.
+voll|full|Nichts passt mehr hinein|Der Bus ist ___, wir bekommen keinen Platz.
+früh|early|Nicht spät|Ich stehe jeden Tag ___ auf.
+spät|late|Nicht früh|Es ist schon ___, ich muss nach Hause.
+`);
+
+/* ===== data/b1.js ===== */
+/* B1 – Mittelstufe */
+KW.addWords('B1', `
+die Erfahrung|experience|Wissen, das man durch Erlebnisse und Praxis sammelt|Für diese Stelle braucht man mehrere Jahre ___ im Beruf.
+die Meinung|opinion|Das, was jemand persönlich über ein Thema denkt|Meiner ___ nach ist das keine gute Idee.
+der Vorteil|advantage|Ein positiver Punkt, ein Plus|Ein großer ___ der Wohnung ist die zentrale Lage.
+der Nachteil|disadvantage|Ein negativer Punkt, ein Minus|Der einzige ___ ist der hohe Preis.
+die Lösung|solution|Die Antwort auf ein Problem|Wir müssen gemeinsam eine ___ für das Problem finden.
+der Erfolg|success|Ein positives Ergebnis nach viel Mühe|Das Konzert war ein großer ___.
+das Ziel|goal|Das, was man erreichen möchte|Mein ___ ist es, die Prüfung zu bestehen.
+die Zukunft|future|Die Zeit, die noch kommt|Niemand weiß, was die ___ bringt.
+die Umwelt|environment|Natur, Luft und Wasser um uns herum|Plastikmüll ist schlecht für die ___.
+der Verkehr|traffic|Alle Autos, Busse und Bahnen auf den Straßen|Morgens ist in der Innenstadt viel ___.
+der Stau|traffic jam|Viele Autos stehen und kommen nicht weiter|Wegen eines Unfalls standen wir zwei Stunden im ___.
+die Verspätung|delay|Wenn der Zug später kommt als geplant|Der Zug hat 30 Minuten ___.
+die Unterkunft|accommodation|Ein Ort zum Übernachten auf Reisen|Wir suchen eine günstige ___ für drei Nächte.
+der Ausflug|excursion|Eine kurze Reise für einen Tag|Am Sonntag machen wir einen ___ an den See.
+das Gepäck|luggage|Koffer und Taschen auf einer Reise|Sie können Ihr ___ an der Rezeption abgeben.
+die Grenze|border|Die Linie zwischen zwei Ländern|An der ___ mussten wir unsere Pässe zeigen.
+das Ausland|abroad|Alle Länder außer dem eigenen|Nach dem Studium möchte sie ein Jahr im ___ arbeiten.
+die Heimat|home country|Der Ort, an dem man aufgewachsen ist und sich zu Hause fühlt|Nach zehn Jahren kehrte er in seine ___ zurück.
+die Bewerbung|application|Schreiben, mit dem man sich um eine Stelle bemüht|Ich habe meine ___ gestern an die Firma geschickt.
+der Lebenslauf|CV|Liste mit Schule, Ausbildung und bisherigen Stellen|Schicken Sie uns bitte Ihren ___ und Ihre Zeugnisse.
+das Gehalt|salary|Das Geld, das Angestellte jeden Monat bekommen|Sie verhandelt mit dem Chef über ein höheres ___.
+der Vertrag|contract|Ein Dokument, das zwei Seiten unterschreiben|Bitte lesen Sie den ___ genau, bevor Sie unterschreiben.
+die Kündigung|notice of termination|Schreiben, mit dem man eine Stelle oder Wohnung beendet|Er hat gestern seine ___ eingereicht.
+die Abteilung|department|Ein Bereich in einer Firma, zum Beispiel Marketing|Sie leitet die ___ für Kundenservice.
+der Kunde|customer|Jemand, der in einem Geschäft etwas kauft|Der ___ möchte die Ware zurückgeben.
+das Angebot|offer|Ein Vorschlag mit Preis; im Supermarkt oft besonders günstig|Diese Woche sind Erdbeeren im ___.
+der Rabatt|discount|Eine Reduzierung des Preises in Prozent|Studierende bekommen zehn Prozent ___.
+die Quittung|receipt|Zettel, der zeigt, dass man bezahlt hat|Ohne ___ können Sie die Ware nicht umtauschen.
+die Werbung|advertising|Sie soll Menschen zum Kaufen bringen|Im Fernsehen läuft ständig ___ für Autos.
+die Nachricht|message|Eine kurze Information, die man schickt oder bekommt|Hast du meine ___ auf dem Handy gelesen?
+die Zeitung|newspaper|Sie erscheint täglich und berichtet über Aktuelles|Beim Frühstück lese ich die ___.
+die Sendung|broadcast|Ein Programm im Fernsehen oder Radio|Die ___ läuft jeden Sonntag um 20:15 Uhr.
+das Gespräch|conversation|Wenn zwei oder mehr Menschen miteinander reden|Wir hatten ein langes ___ über unsere Pläne.
+der Streit|argument|Wenn Menschen sich laut und böse unterhalten|Die Nachbarn hatten ___ wegen der lauten Musik.
+das Vertrauen|trust|Der Glaube, dass man sich auf jemanden verlassen kann|Eine gute Freundschaft braucht ___.
+die Geduld|patience|Die Fähigkeit, ruhig zu warten|Beim Sprachenlernen braucht man viel ___.
+die Angst|fear|Das Gefühl bei Gefahr|Viele Kinder haben ___ vor der Dunkelheit.
+die Freude|joy|Ein starkes Gefühl von Glück|Die Kinder sprangen vor ___ in die Luft.
+die Stimmung|mood|Die Atmosphäre oder Laune in einer Gruppe|Auf der Party war die ___ super.
+der Eindruck|impression|Das Bild, das man sich von jemandem macht|Beim Vorstellungsgespräch zählt der erste ___.
+das Verhalten|behaviour|Die Art, wie jemand handelt und reagiert|Sein unhöfliches ___ hat alle überrascht.
+der Vergleich|comparison|Wenn man zwei Dinge nebeneinander betrachtet|Im ___ zu Berlin ist München sehr teuer.
+das Beispiel|example|Ein konkreter Fall, der etwas erklärt|Können Sie mir bitte ein ___ geben?
+der Grund|reason|Das „Warum“ hinter einer Sache|Aus welchem ___ haben Sie gekündigt?
+die Folge|consequence|Das, was nach einem Ereignis passiert|Der Unfall war die ___ von zu hohem Tempo.
+die Ursache|cause|Das, was ein Problem auslöst|Die Polizei sucht noch nach der ___ des Brandes.
+der Zweck|purpose|Wozu etwas gut ist|Das Geld ist für einen guten ___.
+die Regel|rule|Sie sagt, was erlaubt und was verboten ist|In der Grammatik gibt es zu jeder ___ eine Ausnahme.
+das Gesetz|law|Eine Vorschrift, die der Staat beschließt|Vor dem ___ sind alle Menschen gleich.
+die Pflicht|duty|Etwas, das man tun muss|In Deutschland ist es ___, im Auto einen Gurt zu tragen.
+die Steuer|tax|Geld, das Bürger an den Staat zahlen|Auf Lebensmittel zahlt man sieben Prozent ___.
+die Behörde|public authority|Ein Amt des Staates|Den Antrag müssen Sie bei der zuständigen ___ stellen.
+der Antrag|application form|Eine schriftliche Bitte an ein Amt|Sie stellt einen ___ auf Kindergeld.
+das Formular|form|Ein Blatt mit Feldern, die man ausfüllen muss|Bitte füllen Sie dieses ___ aus und unterschreiben Sie.
+der Ausweis|ID card|Ein Dokument mit Foto, das zeigt, wer man ist|Können Sie mir bitte Ihren ___ zeigen?
+der Unfall|accident|Ein plötzliches Unglück, zum Beispiel im Straßenverkehr|Auf der Autobahn ist ein schwerer ___ passiert.
+der Notfall|emergency|Eine gefährliche Situation, in der man sofort Hilfe braucht|Im ___ wählen Sie die Nummer 112.
+das Rezept|recipe|Anleitung zum Kochen – oder Zettel vom Arzt für Medikamente|Kannst du mir das ___ für diesen Kuchen geben?
+die Ernährung|nutrition|Alles, was man isst und trinkt|Eine gesunde ___ enthält viel Obst und Gemüse.
+die Bewegung|exercise|Körperliche Aktivität wie Gehen oder Sport|Der Arzt sagt, ich brauche mehr ___.
+die Freizeit|leisure time|Die Zeit, in der man nicht arbeiten muss|In meiner ___ spiele ich Gitarre.
+der Verein|club|Organisierte Gruppe, zum Beispiel für Sport|Er spielt seit zehn Jahren Fußball im ___.
+das Mitglied|member|Eine Person, die zu einem Klub oder einer Gruppe gehört|Sie ist seit 2019 ___ im Tennisklub.
+die Bildung|education|Wissen und Können, das man in Schule und Studium erwirbt|Gute ___ ist wichtig für die Zukunft der Kinder.
+das Studium|university studies|Die Ausbildung an einer Universität|Nach dem Abitur beginnt sie ein ___ der Medizin.
+der Abschluss|degree|Das erfolgreiche Ende von Schule oder Ausbildung|Mit diesem ___ kann sie als Ingenieurin arbeiten.
+das Zeugnis|report card|Dokument mit den Noten|Am Ende des Schuljahres bekommen die Kinder ihr ___.
+die Fähigkeit|ability|Etwas, das man gut kann|Sie hat die ___, komplizierte Dinge einfach zu erklären.
+empfehlen|to recommend|Sagen, dass etwas gut ist und der andere es probieren soll|Können Sie mir ein gutes Restaurant ___?
+vorschlagen|to suggest|Eine Idee nennen, was man tun könnte|Darf ich etwas ___? Wir treffen uns morgen.
+entscheiden|to decide|Zwischen mehreren Möglichkeiten wählen|Das musst du selbst ___.
+vergleichen|to compare|Unterschiede und Gemeinsamkeiten suchen|Vor dem Kauf sollte man die Preise ___.
+überzeugen|to convince|Jemanden dazu bringen, etwas zu glauben|Seine Argumente konnten mich nicht ___.
+erledigen|to get done|Eine Aufgabe fertig machen|Ich muss heute noch ein paar Einkäufe ___.
+verschieben|to postpone|Auf einen späteren Zeitpunkt legen|Können wir den Termin auf Freitag ___?
+absagen|to cancel|Mitteilen, dass man nicht kommt|Leider muss ich das Treffen morgen ___.
+verdienen|to earn|Geld für seine Arbeit bekommen|Als Ärztin kann man gut ___.
+sparen|to save|Geld nicht ausgeben, sondern behalten|Wir ___ für ein neues Auto.
+mieten|to rent|Gegen Geld für eine Zeit benutzen|Im Urlaub wollen wir ein Auto ___.
+umziehen|to move house|In eine andere Wohnung wechseln|Nächsten Monat wollen wir nach Leipzig ___.
+reparieren|to repair|Etwas Kaputtes wieder in Ordnung bringen|Kannst du mein Fahrrad ___?
+verbessern|to improve|Besser machen|Ich möchte mein Deutsch ___.
+vermeiden|to avoid|Dafür sorgen, dass etwas nicht passiert|Diesen Fehler kann man leicht ___.
+erreichen|to reach|An ein Ziel kommen; jemanden am Telefon bekommen|Wenn wir uns beeilen, ___ wir den Zug noch.
+verpassen|to miss|Zu spät kommen, sodass der Bus schon weg ist|Beeil dich, sonst ___ wir den Bus!
+erinnern|to remind|Jemandem helfen, an etwas zu denken|Kannst du mich morgen an den Termin ___?
+verlieren|to lose|Etwas nicht mehr haben; nicht gewinnen|Pass auf, dass wir den Schlüssel nicht ___.
+gewinnen|to win|Bei einem Spiel der Beste sein|Wer wird das Spiel heute ___?
+behaupten|to claim|Etwas als wahr darstellen, ohne es zu beweisen|Das kann jeder ___, aber stimmt es auch?
+bemerken|to notice|Etwas plötzlich sehen oder feststellen|Wir ___ erst jetzt, dass die Tür offen steht.
+erlauben|to allow|Sagen, dass jemand etwas tun darf|Meine Eltern ___ mir nicht, so spät auszugehen.
+verbieten|to forbid|Sagen, dass jemand etwas nicht tun darf|Man sollte das Rauchen hier ___.
+höflich|polite|Mit guten Manieren|Sei bitte ___ und sag „Guten Tag“.
+ehrlich|honest|Sagt immer die Wahrheit|Sei ___: Gefällt dir mein neues Kleid?
+neugierig|curious|Möchte immer alles wissen|Kinder sind von Natur aus ___.
+geduldig|patient|Kann ruhig warten|Die Lehrerin erklärt alles ___ noch einmal.
+notwendig|necessary|Unbedingt erforderlich|Eine Operation ist zum Glück nicht ___.
+möglich|possible|Kann sein oder gemacht werden|Ist es ___, den Termin zu verschieben?
+gemütlich|cosy|Angenehm und bequem – ein sehr deutsches Wort|Mit Kerzen und Tee ist es zu Hause richtig ___.
+anstrengend|exhausting|Kostet viel Kraft|Der Umzug war sehr ___, jetzt bin ich fix und fertig.
+günstig|inexpensive|Nicht teuer|Im Angebot ist das Obst besonders ___.
+peinlich|embarrassing|So unangenehm, dass man rot wird|Ich habe ihren Namen vergessen, das war mir sehr ___.
+spannend|exciting|So interessant, dass man nicht aufhören kann|Der Krimi war so ___, dass ich bis 2 Uhr gelesen habe.
+langweilig|boring|Uninteressant|Der Vortrag war so ___, dass ich fast eingeschlafen bin.
+zufrieden|satisfied|Glücklich mit dem, was man hat|Mit dem Ergebnis der Prüfung bin ich sehr ___.
+enttäuscht|disappointed|Traurig, weil etwas nicht so gut war wie erhofft|Sie war ___, weil er ihren Geburtstag vergessen hatte.
+stolz|proud|Sehr froh über die eigene Leistung|Die Eltern sind ___ auf ihre Tochter.
+sparsam|thrifty|Gibt wenig Geld aus|Meine Oma ist sehr ___ und kauft nur im Angebot.
+großzügig|generous|Gibt und teilt gern|Er ist ___ und lädt oft alle zum Essen ein.
+zuverlässig|reliable|Man kann sich immer auf diese Person verlassen|Sie kommt nie zu spät und ist sehr ___.
+`);
+
+/* ===== data/b2.js ===== */
+/* B2 – Fortgeschritten (mit Redewendungen) */
+KW.addWords('B2', `
+der Ansatz|approach|Herangehensweise an ein Problem|Wir brauchen einen völlig neuen ___, um das Problem zu lösen.
+der Aufwand|effort|Zeit, Geld und Mühe, die man investieren muss|Der ___ für die Renovierung war größer als gedacht.
+die Auswirkung|impact|Folge oder Effekt einer Entwicklung|Der Klimawandel hat schon jetzt eine spürbare ___ auf die Landwirtschaft.
+die Bedingung|condition|Voraussetzung, die erfüllt sein muss|Ich komme mit – aber nur unter einer ___.
+das Bedürfnis|need|Wunsch nach etwas, das einem fehlt|Nach der langen Reise hatte ich ein starkes ___ nach Ruhe.
+der Beitrag|contribution|Anteil, den jemand zu einer gemeinsamen Sache leistet|Jeder kann einen ___ zum Umweltschutz leisten.
+der Einfluss|influence|Macht, auf jemanden oder etwas zu wirken|Die Medien haben großen ___ auf die öffentliche Meinung.
+der Einwand|objection|Gegenargument in einer Diskussion|Gegen diesen Plan habe ich nur einen ___.
+der Engpass|bottleneck|Vorübergehende Knappheit, etwa bei Lieferungen|Wegen des Streiks gibt es einen ___ bei der Lieferung.
+die Erkenntnis|insight|Neues Wissen, zu dem man durch Nachdenken oder Forschung gelangt|Die Studie führte zu einer überraschenden ___.
+der Fortschritt|progress|Positive Weiterentwicklung|In der Medizin gab es in den letzten Jahren enormen ___.
+der Gegensatz|contrast|Starker Unterschied zwischen zwei Dingen|Im ___ zu seinem Bruder ist er sehr ruhig.
+das Gerücht|rumour|Unbestätigte Nachricht, die weitererzählt wird|In der Firma geht das ___ um, dass der Chef kündigt.
+das Gewissen|conscience|Inneres Gefühl für Recht und Unrecht|Nach der Lüge hatte sie ein schlechtes ___.
+die Grundlage|basis|Fundament, auf dem etwas aufbaut|Vertrauen ist die ___ jeder guten Zusammenarbeit.
+das Hindernis|obstacle|Etwas, das einem im Weg steht|Die Sprache war anfangs das größte ___.
+der Hinweis|hint|Kurzer Tipp oder Indiz|Die Polizei bekam einen anonymen ___ auf den Täter.
+der Irrtum|error|Falsche Annahme|Das muss ein ___ sein, ich habe nichts bestellt.
+die Maßnahme|measure|Gezielte Handlung, um etwas zu erreichen|Die Regierung beschloss eine neue ___ gegen die Inflation.
+das Merkmal|feature|Typisches Kennzeichen|Ein wichtiges ___ dieser Vogelart ist der rote Schnabel.
+der Mangel|shortage|Zustand, in dem etwas fehlt|In vielen Branchen herrscht ein ___ an Fachkräften.
+die Nachfrage|demand|Interesse der Käufer an einer Ware; Gegenstück zum Angebot|Die ___ nach Elektroautos steigt stetig.
+die Rücksicht|consideration|Beachtung der Gefühle und Interessen anderer|Bitte nehmen Sie ___ auf ältere Fahrgäste.
+der Standpunkt|point of view|Position, die jemand in einer Frage vertritt|Von meinem ___ aus betrachtet ist das unfair.
+die Tendenz|tendency|Allgemeine Richtung einer Entwicklung|Die Preise zeigen eine steigende ___.
+der Umgang|handling|Art, wie man Menschen oder Dinge behandelt|Der richtige ___ mit Kritik will gelernt sein.
+der Umstand|circumstance|Einzelheit, die eine Situation mitbestimmt|Dieser ___ macht die Sache deutlich komplizierter.
+der Ursprung|origin|Ort oder Zeitpunkt, an dem etwas beginnt|Das Wort hat seinen ___ im Lateinischen.
+der Verdacht|suspicion|Vermutung, dass jemand etwas Unrechtes getan hat|Der Kassierer steht unter ___, Geld gestohlen zu haben.
+der Verlust|loss|Das Gegenteil von Gewinn|Die Firma machte im letzten Jahr einen hohen ___.
+das Vorurteil|prejudice|Feste Meinung über jemanden, ohne ihn zu kennen|Dass alle Deutschen pünktlich sind, ist ein ___.
+der Vorwand|pretext|Vorgeschobener Grund, der den wahren verbirgt|Unter dem ___, krank zu sein, blieb er zu Hause.
+der Vorwurf|accusation|Äußerung, mit der man jemandem die Schuld gibt|Sie machte ihm den ___, nie zuzuhören.
+der Wandel|change|Langsame, grundlegende Veränderung|Die Arbeitswelt befindet sich in einem tiefgreifenden ___.
+der Zweifel|doubt|Unsicherheit, ob etwas stimmt|Daran besteht nicht der geringste ___.
+der Anspruch|entitlement|Recht, etwas zu fordern; auch: hohe Erwartung|Arbeitnehmer haben ___ auf mindestens 20 Tage Urlaub.
+die Ausnahme|exception|Fall, der von der Regel abweicht|Normalerweise ist das verboten, aber heute machen wir eine ___.
+die Aussage|statement|Was jemand offiziell erklärt, etwa vor Gericht|Der Zeuge machte bei der Polizei eine ___.
+die Absicht|intention|Fester Wille, etwas Bestimmtes zu tun|Entschuldigung, das war keine ___!
+der Verzicht|renunciation|Freiwilliges Aufgeben von etwas|Der ___ auf Fleisch fällt vielen schwer.
+die Wirkung|effect|Das, was ein Medikament oder eine Handlung auslöst|Das Medikament zeigte schon nach einer Stunde ___.
+der Wohlstand|prosperity|Hoher Lebensstandard einer Gesellschaft|Bildung gilt als Schlüssel zu mehr ___.
+der Zufall|coincidence|Ereignis, das ungeplant und ohne erkennbaren Grund eintritt|Was für ein ___, dich hier zu treffen!
+die Würde|dignity|Der Wert, den jeder Mensch besitzt – laut Grundgesetz unantastbar|„Die ___ des Menschen ist unantastbar.“
+der Neid|envy|Missgunst gegenüber dem Glück anderer|Vor ___ wurde er ganz blass.
+der Ehrgeiz|ambition|Starker Wille, etwas zu leisten und voranzukommen|Mit viel ___ arbeitete sie sich bis zur Chefin hoch.
+der Mut|courage|Bereitschaft, trotz Gefahr zu handeln|Es gehört viel ___ dazu, die Wahrheit zu sagen.
+die Sehnsucht|longing|Schmerzliches Verlangen nach jemandem oder etwas Fernem|Im Ausland hatte er große ___ nach seiner Familie.
+die Zuversicht|confidence|Fester Glaube, dass es gut ausgeht|Trotz der Niederlage blickt die Mannschaft mit ___ nach vorn.
+der Wettbewerb|competition|Konkurrenzkampf, etwa zwischen Firmen|Auf dem Strommarkt herrscht harter ___.
+die Wirtschaft|economy|Gesamtheit von Handel, Industrie und Dienstleistungen|Die deutsche ___ lebt stark vom Export.
+die Währung|currency|Offizielles Geld eines Landes|Der Euro ist die gemeinsame ___ von 20 Staaten.
+der Umsatz|turnover|Gesamte Einnahmen einer Firma aus Verkäufen|Der Konzern steigerte seinen ___ um zehn Prozent.
+der Haushalt|household|Wohngemeinschaft mit gemeinsamer Kasse; auch: Etat des Staates|In unserem ___ leben vier Personen.
+die Mehrheit|majority|Mehr als die Hälfte|Die ___ der Abgeordneten stimmte für das Gesetz.
+die Regierung|government|Kanzler und Minister zusammen|Die ___ plant eine Reform der Rente.
+begründen|to justify|Argumente für eine Meinung nennen|Können Sie Ihre Entscheidung bitte ___?
+bestätigen|to confirm|Erklären, dass etwas richtig ist|Bitte ___ Sie den Termin per E-Mail.
+betonen|to emphasise|Besonders hervorheben|Ich möchte noch einmal ___, wie wichtig das ist.
+bewältigen|to cope with|Eine schwierige Aufgabe meistern|Wie sollen wir diese Menge Arbeit nur ___?
+beurteilen|to assess|Sich ein Urteil über etwas bilden|Das kann ich nicht ___, dafür fehlen mir Informationen.
+bezweifeln|to doubt|Nicht recht glauben|Dass er pünktlich kommt, möchte ich stark ___.
+durchsetzen|to enforce|Etwas gegen Widerstand erreichen|Die Gewerkschaft konnte höhere Löhne ___.
+einschätzen|to estimate|Ungefähr bewerten, wie etwas ist|Es ist schwer, die Folgen richtig zu ___.
+entwickeln|to develop|Nach und nach entstehen lassen|Die Firma will ein sparsameres Modell ___.
+erfordern|to require|Nötig machen|Solche Projekte ___ viel Geduld und Erfahrung.
+ermöglichen|to enable|Machbar machen|Stipendien ___ vielen Jugendlichen ein Studium.
+fördern|to promote|Unterstützen, damit sich etwas gut entwickelt|Die Stiftung will junge Talente ___.
+gefährden|to endanger|In eine riskante Lage bringen|Wer zu schnell fährt, kann andere ___.
+scheitern|to fail|Keinen Erfolg haben; misslingen|Ohne Kompromiss werden die Verhandlungen ___.
+schildern|to describe|Anschaulich und ausführlich erzählen|Können Sie den Unfall genau ___?
+umsetzen|to implement|Einen Plan in die Tat bringen|Die Idee ist gut, aber schwer zu ___.
+verdrängen|to repress|Etwas Unangenehmes aus dem Bewusstsein schieben|Viele Menschen ___ ihre Ängste, statt darüber zu reden.
+vermitteln|to convey|Wissen weitergeben; zwischen zwei Seiten schlichten|Gute Lehrer können auch schwierige Inhalte ___.
+verursachen|to cause|Der Auslöser für etwas sein|Schon kleine Fehler können großen Schaden ___.
+verzichten|to do without|Freiwillig ohne etwas auskommen|Auf Zucker kann ich nur schwer ___.
+zögern|to hesitate|Unsicher abwarten, statt sofort zu handeln|Wenn Sie Fragen haben, ___ Sie nicht, mich anzurufen.
+zweifeln|to have doubts|Unsicher sein, ob etwas stimmt|An seiner Ehrlichkeit muss niemand ___.
+nachweisen|to prove|Mit Belegen zeigen, dass etwas stimmt|Die Ermittler konnten ihm den Betrug nicht ___.
+ausgleichen|to compensate|Einen Unterschied oder Nachteil wettmachen|Sport hilft mir, den Stress im Büro zu ___.
+einräumen|to concede|Zugeben, dass der andere recht hat; auch: Dinge in den Schrank legen|Ich muss ___, dass dein Einwand berechtigt ist.
+abwägen|to weigh up|Vor- und Nachteile sorgfältig gegeneinanderstellen|Wir müssen Kosten und Nutzen gründlich ___.
+anpassen|to adapt|So verändern, dass es zu neuen Umständen passt|Wir müssen den Zeitplan an die neue Lage ___.
+angemessen|appropriate|Passend zur Situation|Für ein Vorstellungsgespräch ist ein Anzug ___.
+ausführlich|detailed|Mit vielen Einzelheiten|Bitte beschreiben Sie den Vorfall möglichst ___.
+bescheiden|modest|Ohne zu prahlen; mit wenig zufrieden|Trotz ihres Erfolgs ist sie ___ geblieben.
+eindeutig|unambiguous|Völlig klar, ohne zweite Deutung|Die Antwort der Wähler war ___.
+erheblich|considerable|Von beträchtlichem Ausmaß|Der Sturm richtete ___ mehr Schaden an als erwartet.
+flüchtig|fleeting|Nur kurz und oberflächlich|Ich kenne ihn nur ___ von einer Feier.
+gelassen|calm|Innerlich ruhig, auch unter Druck|Sie reagierte erstaunlich ___ auf die Kritik.
+gründlich|thorough|Sehr sorgfältig und genau|Wasch dir die Hände bitte ___!
+hartnäckig|persistent|Gibt nicht nach und bleibt lange|Der Husten ist ___ und will einfach nicht weggehen.
+heikel|delicate|Schwierig und mit Vorsicht zu behandeln|Über Geld zu sprechen ist unter Freunden oft ___.
+sachlich|objective|Ohne Emotionen, auf Fakten gestützt|Bleiben wir bitte ___ und werden nicht persönlich.
+skeptisch|sceptical|Voller Zweifel|Ich bin ___, ob dieser Plan funktioniert.
+umstritten|controversial|Es gibt dazu sehr verschiedene Meinungen|Das neue Gesetz ist in der Bevölkerung stark ___.
+vorläufig|provisional|Noch nicht endgültig|Dieses Ergebnis ist nur ___, die endgültigen Zahlen folgen morgen.
+wesentlich|essential|Den Kern einer Sache betreffend; auch: deutlich|Die neue Version ist ___ schneller als die alte.
+zuständig|responsible|Für eine bestimmte Aufgabe verantwortlich|Für solche Fragen ist das Bürgeramt ___.
+vielseitig|versatile|Mit vielen verschiedenen Fähigkeiten oder Verwendungen|Sie ist sehr ___: Sie malt, singt und programmiert.
+nachhaltig|sustainable|Schont Ressourcen und wirkt langfristig|Wir wollen ___ wirtschaften und Abfall vermeiden.
+der Daumen|thumb|Redewendung: jemandem die … drücken (= ihm Glück wünschen)|Ich drücke dir für die Prüfung beide ___.
+der Holzweg|wrong track|Redewendung: auf dem … sein (= sich irren)|Wenn du glaubst, ich mache das allein, bist du auf dem ___.
+das Schwein|pig|Redewendung: … haben (= unerwartetes Glück haben)|Der Ball ging knapp vorbei – da haben wir ___ gehabt!
+der Faden|thread|Redewendung: den … verlieren (= nicht mehr wissen, was man sagen wollte)|Entschuldigung, jetzt habe ich den ___ verloren. Wo war ich?
+der Strang|rope|Redewendung: an einem … ziehen (= gemeinsam dasselbe Ziel verfolgen)|Wenn alle an einem ___ ziehen, schaffen wir das.
+das Blatt|leaf|Redewendung: kein … vor den Mund nehmen (= offen seine Meinung sagen)|Sie nimmt kein ___ vor den Mund und sagt, was sie denkt.
+der Kragen|collar|Redewendung: jemandem platzt der … (= er wird sehr wütend)|Nach der dritten Verspätung platzte ihm der ___.
+der Nagel|nail|Redewendung: den … auf den Kopf treffen (= genau das Richtige sagen)|Mit dieser Bemerkung hast du den ___ auf den Kopf getroffen.
+der Stein|stone|Redewendung: jemandem fällt ein … vom Herzen (= er ist sehr erleichtert)|Als das Ergebnis kam, fiel mir ein ___ vom Herzen.
+der Senf|mustard|Redewendung: seinen … dazugeben (= ungefragt seine Meinung äußern)|Musst du eigentlich immer deinen ___ dazugeben?
+die Leitung|line|Redewendung: eine lange … haben (= etwas nur langsam verstehen)|Erklär es noch einmal, ich habe heute eine lange ___.
+die Kante|edge|Redewendung: Geld auf die hohe … legen (= sparen)|Jeden Monat legt sie 200 Euro auf die hohe ___.
+der Dorn|thorn|Redewendung: jemandem ein … im Auge sein (= ihn sehr stören)|Der wilde Garten ist den Nachbarn ein ___ im Auge.
+`);
+
+/* ===== data/c1.js ===== */
+/* C1 – Sehr fortgeschritten (seltene Wörter, Idiomatik, Feinheiten) */
+KW.addWords('C1', `
+die Ambivalenz|ambivalence|Gleichzeitiges Bestehen widersprüchlicher Gefühle|Ihre ___ gegenüber dem Umzug war deutlich: Freude und Wehmut zugleich.
+die Anmaßung|presumption|Überhebliches Beanspruchen von etwas, das einem nicht zusteht|Es wäre eine ___, über Dinge zu urteilen, die man nicht kennt.
+der Argwohn|suspicion|Misstrauen; gehobenes Wort für die Vermutung böser Absichten|Sein plötzlicher Reichtum weckte den ___ der Nachbarn.
+die Bredouille|predicament|Umgangssprachlich: unangenehme, schwierige Lage (aus dem Französischen)|Durch die doppelte Zusage geriet er in eine arge ___.
+das Dilemma|dilemma|Zwangslage, in der beide Wahlmöglichkeiten unangenehm sind|Sie steckt in einem ___: Karriere im Ausland oder Nähe zur Familie.
+die Diskrepanz|discrepancy|Auffälliges Missverhältnis zwischen zwei Dingen|Zwischen Anspruch und Wirklichkeit besteht eine erhebliche ___.
+der Duktus|style of expression|Charakteristische Art des Schreibens oder Sprechens|Der nüchterne ___ des Berichts passt zur Behördensprache.
+der Eklat|scandal|Aufsehen erregender Vorfall, der öffentlich Anstoß erregt|Die Sitzung endete mit einem ___, als der Minister den Saal verließ.
+das Ermessen|discretion|Freier Entscheidungsspielraum, besonders einer Behörde|Die Höhe der Strafe liegt im ___ des Gerichts.
+der Fauxpas|faux pas|Verstoß gegen die Umgangsformen; gesellschaftlicher Fehltritt|Die Gastgeberin zu duzen war ein peinlicher ___.
+die Floskel|empty phrase|Abgenutzte, inhaltsleere Redewendung|„Mit freundlichen Grüßen“ ist eine bloße ___.
+der Habitus|habitus|Gesamtes Auftreten und Gebaren eines Menschen|Sein professoraler ___ wirkte auf die Studierenden einschüchternd.
+die Hybris|hubris|Frevelhafter Übermut; Selbstüberschätzung, die dem Fall vorausgeht|Die ___ des Konzerns führte direkt in die Pleite.
+der Inbegriff|epitome|Vollkommenste Verkörperung einer Eigenschaft|Für viele ist Paris der ___ der Romantik.
+das Kalkül|calculation|Berechnende Überlegung, die auf den eigenen Vorteil zielt|Hinter seiner Großzügigkeit steckte kühles ___.
+das Kleinod|gem|Gehoben: Kostbarkeit, Juwel|Die versteckte Kapelle ist ein wahres ___ der Barockkunst.
+der Konsens|consensus|Übereinstimmung der Meinungen|In dieser Frage besteht parteiübergreifend ___.
+der Makel|flaw|Fehler, der den Wert oder das Ansehen mindert|An ihrem Lebenslauf haftet nicht der geringste ___.
+die Muße|leisure|Freie, ruhige Zeit für das, was man gern tut|Im Ruhestand findet er endlich die ___ zum Lesen.
+die Nuance|nuance|Feine Abstufung; kaum merklicher Unterschied|Zwischen „sagen“ und „behaupten“ liegt eine wichtige ___.
+die Obhut|care|Schützende Aufsicht und Fürsorge|Die Kinder blieben in der ___ der Großeltern.
+das Plädoyer|plea|Engagierte Rede für eine Sache; Schlussvortrag vor Gericht|Der Artikel ist ein leidenschaftliches ___ für mehr Toleranz.
+die Prämisse|premise|Voraussetzung, von der eine Schlussfolgerung ausgeht|Die Rechnung stimmt nur unter der ___, dass die Zinsen stabil bleiben.
+die Quintessenz|quintessence|Das Wesentliche; der Kern einer langen Erörterung|Die ___ des Vortrags lautet: Weniger ist mehr.
+das Rückgrat|backbone|Wirbelsäule; übertragen: Charakterfestigkeit|Wer dem Chef widerspricht, beweist ___.
+der Sachverhalt|facts of the case|Die tatsächlichen Umstände eines Falles|Bevor wir urteilen, muss der ___ geklärt werden.
+die Schmach|disgrace|Gehoben: tiefe Demütigung, Schande|Die Niederlage gegen den Erzrivalen empfand er als ___.
+die Tragweite|significance|Ausmaß, in dem sich etwas auswirkt|Niemand erkannte damals die ___ dieser Entscheidung.
+der Trugschluss|fallacy|Scheinbar logische, aber falsche Folgerung|Dass teure Produkte immer besser sind, ist ein ___.
+das Unbehagen|unease|Diffuses Gefühl, dass etwas nicht stimmt|Bei dem Gedanken an die Prüfung beschlich ihn leises ___.
+der Unmut|displeasure|Verärgerung, Missstimmung|Die Gebührenerhöhung löste großen ___ unter den Bürgern aus.
+der Verdruss|annoyance|Anhaltender Ärger; steckt auch in „Politik…“|Der ständige Baulärm bereitet den Anwohnern viel ___.
+der Vorbehalt|reservation|Einschränkung, unter der man zustimmt|Ich stimme zu – allerdings unter einem ___.
+die Wehmut|wistfulness|Leise Trauer beim Gedanken an Vergangenes|Mit ___ dachte sie an ihre Studienzeit zurück.
+die Willkür|arbitrariness|Handeln nach Belieben, ohne Rücksicht auf Regeln und Recht|Die Bürger waren der ___ der Beamten schutzlos ausgeliefert.
+die Zäsur|caesura|Einschnitt, der eine Epoche von der nächsten trennt|Der Mauerfall markiert eine historische ___.
+der Zwiespalt|inner conflict|Innere Zerrissenheit zwischen zwei Möglichkeiten|Er befand sich im ___ zwischen Pflicht und Neigung.
+das Zerwürfnis|rift|Tiefer Bruch einer Beziehung nach einem Streit|Der Erbstreit führte zum endgültigen ___ zwischen den Brüdern.
+der Abglanz|faint reflection|Schwacher Widerschein früherer Größe|Das Hotel ist nur noch ein matter ___ vergangener Pracht.
+der Anflug|touch|Leise Andeutung, Hauch von etwas|In ihrer Stimme lag ein ___ von Ironie.
+der Zankapfel|bone of contention|Gegenstand eines Streits (nach einer griechischen Sage)|Die Grenzregion ist seit Jahrhunderten ein ___ beider Staaten.
+der Sündenbock|scapegoat|Jemand, dem man die Schuld anderer aufbürdet|Nach der Niederlage wurde der Torwart zum ___ gemacht.
+der Ladenhüter|shelf warmer|Ware, die sich nicht verkauft|Das teure Modell erwies sich als ___.
+die Eselsbrücke|mnemonic|Merkhilfe, zum Beispiel ein Reim|„Wer nämlich mit h schreibt, ist dämlich“ ist eine bekannte ___.
+der Weltschmerz|world-weariness|Trauer über die Unzulänglichkeit der Welt (Begriff der Romantik)|Die Gedichte des jungen Dichters sind voller ___.
+das Fernweh|wanderlust|Sehnsucht nach der Ferne; Gegenstück zum Heimweh|Beim Anblick der Schiffe packte ihn das ___.
+der Zeitgeist|zeitgeist|Für eine Epoche typische Denk- und Lebensweise|Das Design trifft genau den ___ der Zwanzigerjahre.
+das Augenmaß|sense of proportion|Fähigkeit, Maß zu halten und angemessen zu urteilen|Politik braucht Leidenschaft und ___.
+das Feingefühl|tact|Sensibilität im Umgang mit anderen|Solche Nachrichten muss man mit viel ___ überbringen.
+der Deut|whit|Kommt fast nur in einer Wendung vor: „keinen … besser“ (= überhaupt nicht)|Der Nachfolger ist keinen ___ besser als sein Vorgänger.
+der Hehl|secret|Redewendung: keinen … aus etwas machen (= etwas offen zeigen)|Sie machte keinen ___ aus ihrer Abneigung.
+der Garaus|end|Redewendung: jemandem oder einer Sache den … machen (= vernichten)|Der Frost hat den Tomatenpflanzen den ___ gemacht.
+das Kerbholz|tally stick|Redewendung: etwas auf dem … haben (= etwas Unrechtes getan haben)|Der Verdächtige hat schon einiges auf dem ___.
+der Stegreif|impromptu|Redewendung: aus dem … (= ohne Vorbereitung)|Sie hielt die Rede völlig aus dem ___.
+der Scheffel|bushel|Redewendung: sein Licht unter den … stellen (= seine Fähigkeiten verbergen)|Stell dein Licht nicht unter den ___, du kannst das hervorragend!
+die Schippe|shovel|Redewendung: jemanden auf die … nehmen (= ihn veralbern)|Glaub ihm kein Wort, er nimmt dich nur auf die ___.
+die Lunte|fuse|Redewendung: … riechen (= Gefahr oder einen Trick ahnen)|Als der Fremde nach dem Tresor fragte, roch sie ___.
+der Pranger|pillory|Redewendung: jemanden an den … stellen (= öffentlich bloßstellen)|Der Bericht stellt die Missstände in der Klinik an den ___.
+die Stange|pole|Redewendung: jemanden bei der … halten (= dafür sorgen, dass er weitermacht)|Mit kleinen Prämien hält die Firma ihre Kunden bei der ___.
+anprangern|to denounce|Öffentlich scharf kritisieren|Die Opposition will die Verschwendung im Parlament ___.
+erörtern|to discuss in depth|Ein Thema eingehend und von mehreren Seiten besprechen|In der Sitzung wollen wir die Vor- und Nachteile ___.
+erwägen|to consider|Etwas prüfend in Betracht ziehen|Wir ___ ernsthaft, den Standort zu verlegen.
+frönen|to indulge in|Sich einer Leidenschaft ganz hingeben (mit Dativ)|Im Urlaub kann er endlich seinem Hobby ___.
+hadern|to quarrel with fate|Mit etwas unzufrieden sein und es nicht annehmen können|Es hilft nichts, mit dem Schicksal zu ___.
+hegen|to harbour|Gefühle oder Gedanken in sich tragen: Zweifel, Hoffnung, einen Groll …|Viele Fachleute ___ Zweifel an dieser Theorie.
+kaschieren|to conceal|Geschickt verdecken, damit ein Mangel nicht auffällt|Mit Humor versucht er, seine Unsicherheit zu ___.
+mutmaßen|to conjecture|Ohne Beweise vermuten|Über die Gründe des Rücktritts kann man nur ___.
+monieren|to criticise|Beanstanden, bemängeln|Die Prüfer ___ vor allem die fehlenden Belege.
+nivellieren|to level out|Unterschiede einebnen|Das neue Steuermodell soll soziale Unterschiede ___.
+obliegen|to be incumbent on|Jemandes Aufgabe oder Pflicht sein (mit Dativ)|Die Kontrolle der Regierung muss dem Parlament ___.
+postulieren|to postulate|Als gegeben annehmen; unbedingt fordern|Manche Ökonomen ___ einen stets rational handelnden Menschen.
+preisgeben|to divulge|Ein Geheimnis verraten; etwas schutzlos aufgeben|Der Journalist wollte seine Quelle nicht ___.
+revidieren|to revise|Ein Urteil oder eine Meinung nach Prüfung ändern|Nach dem Gespräch musste ich mein Urteil ___.
+schmälern|to diminish|Den Wert oder Verdienst geringer machen|Ich will Ihre Leistung keineswegs ___.
+schwelgen|to revel|Sich genussvoll hingeben, etwa in Erinnerungen|Beim Klassentreffen ___ alle in Erinnerungen.
+sinnieren|to ponder|Ganz in Gedanken versunken nachdenken|Stundenlang konnte er über den Sinn des Lebens ___.
+tadeln|to reprimand|Jemanden wegen eines Fehlers zurechtweisen|Statt immer nur zu ___, sollte man auch loben.
+untermauern|to substantiate|Eine Behauptung mit Belegen stützen|Sie konnte ihre These mit aktuellen Zahlen ___.
+verhehlen|to conceal|Gehoben: verbergen, verschweigen|Ich kann meine Enttäuschung nicht ___.
+verschmähen|to spurn|Aus Geringschätzung ablehnen|Ein so großzügiges Angebot sollte man nicht ___.
+vereiteln|to thwart|Einen Plan zum Scheitern bringen|Die Polizei konnte den Anschlag rechtzeitig ___.
+zaudern|to dither|Unentschlossen zögern|Wer zu lange zu ___ pflegt, verpasst die Gelegenheit.
+zermürben|to wear down|Jemandes Widerstandskraft nach und nach aufreiben|Monatelange Verhandlungen ___ selbst erfahrene Diplomaten.
+zuspitzen|to bring to a head|Eine Lage verschärfen; eine Aussage pointiert formulieren|Für die Schlagzeile musste sie die These stark ___.
+ahnden|to punish|Amtssprache: ein Vergehen bestrafen|Solche Verstöße wird die Behörde konsequent ___.
+brüskieren|to snub|Jemanden schroff und verletzend behandeln|Mit dieser Absage wollte er niemanden ___.
+eruieren|to ascertain|Durch gründliches Nachforschen herausfinden|Wir müssen zunächst ___, wer davon wusste.
+lavieren|to manoeuvre|Sich geschickt durch Schwierigkeiten winden, ohne sich festzulegen|Der Kanzler muss zwischen den Lagern seiner Koalition ___.
+rügen|to rebuke|Offiziell tadeln|Der Presserat kann Zeitungen öffentlich ___.
+entkräften|to refute|Ein Argument widerlegen und ihm so die Wirkung nehmen|Mit neuen Fakten konnte sie den Vorwurf ___.
+bekunden|to express|Gehoben: deutlich zum Ausdruck bringen|Viele Staaten ___ ihre Solidarität mit den Opfern.
+billigen|to approve|Für richtig erklären, gutheißen|Der Aufsichtsrat muss den Plan noch ___.
+abwegig|absurd|Völlig unrealistisch, fern jeder Vernunft|Die Vorstellung, er habe das allein geplant, ist ___.
+akribisch|meticulous|Mit äußerster Sorgfalt und Genauigkeit|Die Restauratorin arbeitet ___ an jedem Detail.
+beiläufig|casual|Nebenbei, wie zufällig geäußert|Sie erwähnte ganz ___, dass sie gekündigt hatte.
+brisant|explosive|Von hoher Aktualität und voller Konfliktstoff|Das Dokument ist politisch äußerst ___.
+dezidiert|decided|Entschieden, klar und bestimmt|Sie vertritt ___ die Gegenposition.
+diffizil|tricky|Schwierig und heikel, erfordert Fingerspitzengefühl|Die Verhandlungen gestalten sich äußerst ___.
+eloquent|eloquent|Sprachgewandt, redegewandt|Der Anwalt ist ___ und überzeugt jedes Publikum.
+hanebüchen|outrageous|Haarsträubend unsinnig, empörend|Diese Ausrede ist schlicht ___.
+lapidar|terse|Knapp und ohne weitere Erläuterung|Auf die lange Anfrage antwortete er ___: „Nein.“
+marode|dilapidated|Heruntergekommen, baufällig|Viele Brücken im Land sind ___ und müssen saniert werden.
+mondän|glamorous|Betont elegant und weltgewandt|Der Kurort wirkt ___ und ein wenig aus der Zeit gefallen.
+obsolet|obsolete|Überholt, nicht mehr gebräuchlich|Durch das Smartphone sind Stadtpläne fast ___ geworden.
+penibel|fastidious|Übertrieben genau, bis ins Kleinste|Er achtet ___ darauf, dass jede Akte an ihrem Platz liegt.
+plakativ|simplistic|Bewusst vereinfacht und auffällig, wie auf einem Poster|Die Forderung ist ___, aber wenig durchdacht.
+prekär|precarious|Unsicher, heikel – oft über Arbeitsverhältnisse|Die finanzielle Lage des Vereins ist ___.
+profund|profound|Tiefgründig, auf solidem Wissen beruhend|Ihre Kenntnisse der Rechtsgeschichte sind ___.
+redselig|talkative|Gern und viel redend|Nach dem zweiten Glas Wein wurde er ___.
+resolut|resolute|Entschlossen und durchsetzungsfähig|Die Schaffnerin griff ___ ein und beendete den Streit.
+salopp|casual|Ungezwungen, lässig – auch über Sprache|„Kohle“ ist ___ für Geld.
+spröde|brittle|Hart und leicht brechend; übertragen: abweisend, schwer zugänglich|Das Material wird bei Kälte ___.
+stichhaltig|sound|So gut begründet, dass es einer Prüfung standhält|Dieses Argument ist nicht ___.
+subtil|subtle|Fein, kaum wahrnehmbar und doch wirkungsvoll|Die Kritik war so ___, dass er sie gar nicht bemerkte.
+süffisant|smug|Spöttisch-überheblich, selbstgefällig|„Das hätte ich Ihnen gleich sagen können“, bemerkte sie ___.
+triftig|compelling|Sehr überzeugend, zwingend – meist über Gründe|Für die Absage muss der Grund ___ sein.
+unwirsch|gruff|Mürrisch und unfreundlich|Auf die harmlose Frage reagierte er ___.
+vage|vague|Unbestimmt, ungenau|Seine Angaben zum Tathergang blieben ___.
+vehement|vehement|Heftig, mit Nachdruck|Die Gewerkschaft widersprach ___.
+verschroben|eccentric|Seltsam und eigenwillig im Wesen|Der alte Professor gilt als ___, aber genial.
+zwielichtig|shady|Undurchsichtig und nicht vertrauenswürdig|Der Vermittler wirkte auf mich ___.
+lakonisch|laconic|Wortkarg und trocken|„Läuft“, antwortete sie ___.
+nüchtern|sober|Sachlich, ohne Illusionen; auch: nicht betrunken|Betrachten wir die Lage einmal ganz ___.
+mühselig|laborious|Mit großer Plage verbunden|Der Aufstieg über das Geröll war ___.
+kleinlaut|sheepish|Nach großspurigem Auftreten plötzlich still und verlegen|Als der Fehler aufflog, wurde er ganz ___.
+wortkarg|taciturn|Spricht nur das Nötigste|Der Bergbauer war freundlich, aber ___.
+behutsam|gentle|Vorsichtig und rücksichtsvoll|Sie hob das schlafende Kind ___ aus dem Wagen.
+beharrlich|persistent|Ausdauernd an einem Ziel festhaltend|Er fragte ___ nach, bis er eine Antwort bekam.
+unverhohlen|undisguised|Ganz offen gezeigt, ohne jede Zurückhaltung|Sie musterte ihn ___ neugierig.
+ungestüm|impetuous|Stürmisch, wild, ohne Zurückhaltung|Der junge Hund sprang ___ an ihr hoch.
+`);
+
+/* ===== engine.js ===== */
+/* ============================================================
+   engine.js – Kreuzworträtsel-Generator (ohne DOM, läuft auch in Node)
+   Eingabe: Wortobjekte. Ausgabe: Gitter mit sich kreuzenden Einträgen.
+   ============================================================ */
+(function (KW) {
+  const MAX_SHORT = 11, MAX_LONG = 12;
+
+  function tryLayout(words, target, rand) {
+    const cells = new Map();           // "r,c" -> { ch, a: bool, d: bool }
+    const placed = [];
+    let minR = 0, maxR = 0, minC = 0, maxC = 0;
+    const key = (r, c) => r + ',' + c;
+    const get = (r, c) => cells.get(key(r, c));
+
+    function fits(letters, r, c, dir) {
+      const dr = dir === 'd' ? 1 : 0, dc = dir === 'a' ? 1 : 0, n = letters.length;
+      if (get(r - dr, c - dc) || get(r + dr * n, c + dc * n)) return null;
+      let cross = 0;
+      for (let k = 0; k < n; k++) {
+        const rr = r + dr * k, cc = c + dc * k, cell = get(rr, cc);
+        if (cell) {
+          if (cell.ch !== letters[k] || cell[dir]) return null;
+          cross++;
+        } else if (get(rr - dc, cc - dr) || get(rr + dc, cc + dr)) return null;
+      }
+      if (cross === n) return null;
+      const h = Math.max(maxR, r + dr * (n - 1)) - Math.min(minR, r) + 1;
+      const w = Math.max(maxC, c + dc * (n - 1)) - Math.min(minC, c) + 1;
+      if (Math.min(h, w) > MAX_SHORT || Math.max(h, w) > MAX_LONG) return null;
+      return cross * 100 - h * w;
+    }
+    function put(word, letters, r, c, dir) {
+      const dr = dir === 'd' ? 1 : 0, dc = dir === 'a' ? 1 : 0;
+      letters.forEach((ch, k) => {
+        const rr = r + dr * k, cc = c + dc * k, cell = get(rr, cc) || { ch };
+        cell[dir] = true; cells.set(key(rr, cc), cell);
+        minR = Math.min(minR, rr); maxR = Math.max(maxR, rr); minC = Math.min(minC, cc); maxC = Math.max(maxC, cc);
+      });
+      placed.push({ word, letters, row: r, col: c, dir });
+    }
+
+    const order = words.map(w => ({ w, k: w.answer.length + rand() * 3 })).sort((x, y) => y.k - x.k).map(x => x.w);
+    const first = order.shift();
+    put(first, Array.from(first.answer), 0, 0, rand() < 0.5 ? 'a' : 'd');
+    let crossings = 0, progress = true;
+    while (order.length && placed.length < target && progress) {
+      progress = false;
+      for (let i = 0; i < order.length && placed.length < target; i++) {
+        const letters = Array.from(order[i].answer);
+        let best = null;
+        for (const p of placed) {
+          const dir = p.dir === 'a' ? 'd' : 'a';
+          for (let pk = 0; pk < p.letters.length; pk++) for (let k = 0; k < letters.length; k++) {
+            if (p.letters[pk] !== letters[k]) continue;
+            const cr = p.row + (p.dir === 'd' ? pk : 0), cc = p.col + (p.dir === 'a' ? pk : 0);
+            const r = cr - (dir === 'd' ? k : 0), c = cc - (dir === 'a' ? k : 0);
+            const s = fits(letters, r, c, dir);
+            if (s === null) continue;
+            const score = s + rand() * 20;
+            if (!best || score > best.score) best = { score, r, c, dir };
+          }
+        }
+        if (best) {
+          const before = cells.size;
+          put(order[i], letters, best.r, best.c, best.dir);
+          crossings += letters.length - (cells.size - before);
+          order.splice(i, 1); i--; progress = true;
+        }
+      }
+    }
+    const h = maxR - minR + 1, w = maxC - minC + 1;
+    return { placed, minR, minC, rows: h, cols: w, score: placed.length * 10000 + crossings * 150 - h * w - Math.abs(h - w) * 3 };
+  }
+
+  /* Baut ein Rätsel aus bis zu `target` der angebotenen Wörter. */
+  KW.buildCrossword = function (words, target, rand, attempts) {
+    let best = null;
+    for (let i = 0; i < (attempts || 40); i++) {
+      const lay = tryLayout(words, target, rand);
+      if (!best || lay.score > best.score) best = lay;
+    }
+    const flip = best.cols > best.rows;            // hochkant passt besser aufs Handy
+    let entries = best.placed.map(p => {
+      const r = p.row - best.minR, c = p.col - best.minC;
+      return flip ? { word: p.word, letters: p.letters, row: c, col: r, dir: p.dir === 'a' ? 'd' : 'a' }
+                  : { word: p.word, letters: p.letters, row: r, col: c, dir: p.dir };
+    });
+    const rows = flip ? best.cols : best.rows, cols = flip ? best.rows : best.cols;
+    entries.sort((x, y) => x.row - y.row || x.col - y.col || (x.dir === 'a' ? -1 : 1));
+    let num = 0, last = '';
+    entries.forEach(e => {
+      const k = e.row + ',' + e.col;
+      if (k !== last) { num++; last = k; }
+      e.num = num;
+      e.cells = e.letters.map((_, i) => (e.row + (e.dir === 'd' ? i : 0)) * cols + e.col + (e.dir === 'a' ? i : 0));
+    });
+    const used = new Set(entries.map(e => e.word));
+    return { rows, cols, entries, unused: words.filter(w => !used.has(w)) };
+  };
+})(KW);
+
+/* ===== levels.js ===== */
+/* ============================================================
+   levels.js – erzeugt alle Levels aus der Wortdatenbank.
+   Es gibt keine handgebauten Einzel-Levels: mehr Wörter in den
+   Datendateien ergeben automatisch frische Rätsel.
+   ============================================================ */
+(function (KW) {
+  const cache = {};
+
+  /* Welche Hinweisart ein Wort als Haupt-Hinweis bekommt (fest pro Wort). */
+  KW.clueKind = function (word, stage) {
+    const mix = stage.clue, total = mix.en + mix.def + mix.ex;
+    let x = KW.hash('clue:' + word.answer) % total;
+    if (word.def.startsWith('Redewendung')) return 'def';
+    if (x < mix.en) return 'en';
+    x -= mix.en;
+    return x < mix.def ? 'def' : 'ex';
+  };
+
+  function finish(id, kind, stage, grid, extra) {
+    return Object.assign({ id, kind, stageId: stage.id, rows: grid.rows, cols: grid.cols,
+      entries: grid.entries.map(e => ({ word: e.word, letters: e.letters, row: e.row, col: e.col, dir: e.dir, num: e.num, cells: e.cells, clue: KW.clueKind(e.word, stage) })) }, extra);
+  }
+
+  /* Alle Levels einer Stufe. Nicht verbaute Wörter wandern zurück in die
+     Warteschlange, damit sich Wörter so spät wie möglich wiederholen. */
+  KW.stageLevels = function (stageId) {
+    if (cache[stageId]) return cache[stageId];
+    const stage = KW.stage(stageId), pool = KW.WORDS[stageId] || [];
+    const rand = KW.rng(KW.hash('stage:' + stageId));
+    let queue = KW.shuffle(pool, rand), round = 1;
+    const out = [];
+    for (let i = 0; i < stage.levels; i++) {
+      const t = stage.levels > 1 ? i / (stage.levels - 1) : 0;
+      const target = Math.round(stage.words[0] + (stage.words[1] - stage.words[0]) * t + (i % 3 === 2 ? 0.4 : 0));
+      const offer = [];
+      while (offer.length < target + 3) {
+        if (!queue.length) { queue = KW.shuffle(pool, rand); round++; }
+        const w = queue.shift();
+        if (!offer.includes(w)) offer.push(w);
+      }
+      const grid = KW.buildCrossword(offer, target, rand, 40);
+      queue = grid.unused.concat(queue);
+      out.push(finish(stageId + '-' + String(i + 1).padStart(2, '0'), 'level', stage, grid,
+        { index: i, number: KW.STAGES.indexOf(stage) * 20 + i + 1, review: round > 1 }));
+    }
+    return cache[stageId] = out;
+  };
+  KW.level = function (id) {
+    const [stageId, n] = id.split('-');
+    return (KW.stageLevels(stageId) || [])[parseInt(n, 10) - 1] || null;
+  };
+  KW.totalLevels = () => KW.STAGES.reduce((n, s) => n + s.levels, 0);
+
+  /* Tagesrätsel: jeden Tag ein neues, auf allen Geräten dasselbe. */
+  KW.dailyPuzzle = function (stageId, date) {
+    const stage = KW.stage(stageId), rand = KW.rng(KW.hash('daily:' + stageId + ':' + date));
+    const offer = KW.shuffle(KW.WORDS[stageId], rand).slice(0, 11);
+    return finish('daily-' + date + '-' + stageId, 'daily', stage, KW.buildCrossword(offer, 8, rand, 50), { date });
+  };
+
+  /* Übungsrätsel aus der persönlichen Wortliste. */
+  KW.practicePuzzle = function (answers, seed) {
+    const words = answers.map(a => KW.WORD_INDEX[a]).filter(Boolean);
+    if (words.length < 4) return null;
+    const rand = KW.rng(KW.hash('practice:' + seed));
+    const offer = KW.shuffle(words, rand).slice(0, 12);
+    const stage = KW.stage(offer[0].stage);
+    const grid = KW.buildCrossword(offer, 7, rand, 60);
+    if (grid.entries.length < 3) return null;
+    const p = finish('practice-' + seed, 'practice', stage, grid, {});
+    p.entries.forEach(e => { e.clue = KW.clueKind(e.word, KW.stage(e.word.stage)); });
+    return p;
+  };
+})(KW);
+
+/* ===== store.js ===== */
+/* ============================================================
+   store.js – Spielstand. Liegt im LocalStorage des Browsers;
+   ein späteres Backend müsste nur load() und save() ersetzen.
+   ============================================================ */
+(function (KW) {
+  const KEY = 'wortkreuz.save.v1';
+  const fresh = () => ({
+    v: 1, stage: 'A1', xp: 0,
+    levels: {},            // id -> { stars, xp, date }
+    daily: {},             // Datum -> Sterne
+    stats: { correct: 0, wrong: 0, hints: 0, reveals: 0, puzzles: 0, perfect: 0, practice: 0 },
+    streak: { count: 0, best: 0, last: '' },
+    words: {},             // LÖSUNG -> { ok, bad, hard, seen }
+    achievements: {},      // id -> Datum
+    session: null,         // angefangenes Rätsel
+    settings: { theme: 'system', translations: true, markErrors: true, keyboard: 'auto', motion: true }
+  });
+
+  const Store = KW.Store = {
+    data: fresh(), persistent: true,
+    load() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        if (raw) {
+          const saved = JSON.parse(raw), base = fresh();
+          this.data = Object.assign(base, saved, {
+            stats: Object.assign(base.stats, saved.stats), streak: Object.assign(base.streak, saved.streak),
+            settings: Object.assign(base.settings, saved.settings)
+          });
+        }
+      } catch (e) { this.persistent = false; }
+      if (!KW.stage(this.data.stage)) this.data.stage = 'A1';
+      return this.data;
+    },
+    save() {
+      try { localStorage.setItem(KEY, JSON.stringify(this.data)); this.persistent = true; }
+      catch (e) { this.persistent = false; }
+    },
+    reset() { this.data = fresh(); this.save(); },
+
+    /* ---- Fortschritt ---- */
+    isDone(id) { return !!this.data.levels[id]; },
+    isUnlocked(level) {
+      return level.index === 0 || this.isDone(KW.stageLevels(level.stageId)[level.index - 1].id);
+    },
+    nextLevel(stageId) {
+      const list = KW.stageLevels(stageId);
+      return list.find(l => !this.isDone(l.id)) || null;
+    },
+    stageProgress(stageId) {
+      const list = KW.stageLevels(stageId);
+      const done = list.filter(l => this.isDone(l.id));
+      return { done: done.length, total: list.length, stars: done.reduce((n, l) => n + this.data.levels[l.id].stars, 0) };
+    },
+    totalDone() { return Object.keys(this.data.levels).length; },
+    totalStars() { return Object.values(this.data.levels).reduce((n, l) => n + l.stars, 0); },
+
+    /* ---- Lernserie ---- */
+    streakNow() {
+      const s = this.data.streak, t = KW.today();
+      const y = new Date(); y.setDate(y.getDate() - 1);
+      return (s.last === t || s.last === KW.today(y)) ? s.count : 0;
+    },
+    touchStreak() {
+      const s = this.data.streak, t = KW.today();
+      if (s.last === t) return false;
+      s.count = this.streakNow() + 1; s.last = t; s.best = Math.max(s.best, s.count);
+      return true;
+    },
+
+    /* ---- Wortliste ---- */
+    wordEntry(answer) {
+      return this.data.words[answer] = this.data.words[answer] || { ok: 0, bad: 0, hard: false, seen: KW.today() };
+    },
+    learnedWords() {
+      return Object.keys(this.data.words).filter(a => KW.WORD_INDEX[a]).map(a => Object.assign({ word: KW.WORD_INDEX[a] }, this.data.words[a]));
+    },
+
+    /* ---- Rang aus XP ---- */
+    rank() {
+      const names = ['Neuling', 'Wortsammler', 'Silbenjäger', 'Satzbauer', 'Vielleser', 'Sprachfreund', 'Wortakrobat', 'Sprachprofi', 'Wortmeister'];
+      const step = 300, i = Math.min(names.length - 1, Math.floor(this.data.xp / step));
+      const last = i === names.length - 1;
+      return { name: names[i], index: i + 1, into: last ? step : this.data.xp - i * step, step, next: last ? null : names[i + 1] };
+    }
+  };
+
+  /* ---- Erfolge: jede Regel prüft nur den Spielstand ---- */
+  KW.ACHIEVEMENTS = [
+    { id: 'first',    name: 'Erster Schritt',  text: 'Löse dein erstes Rätsel.',                 test: d => d.stats.puzzles >= 1 },
+    { id: 'perfect',  name: 'Fehlerfrei',      text: 'Löse ein Rätsel mit drei Sternen.',         test: d => d.stats.perfect >= 1 },
+    { id: 'perfect5', name: 'Sternensammler',  text: 'Hole zehnmal drei Sterne.',                 test: d => d.stats.perfect >= 10 },
+    { id: 'streak3',  name: 'Dranbleiber',     text: 'Lerne drei Tage in Folge.',                 test: d => d.streak.best >= 3 },
+    { id: 'streak7',  name: 'Eine ganze Woche', text: 'Lerne sieben Tage in Folge.',              test: d => d.streak.best >= 7 },
+    { id: 'streak30', name: 'Gewohnheitstier', text: 'Lerne 30 Tage in Folge.',                   test: d => d.streak.best >= 30 },
+    { id: 'words50',  name: 'Wortschatzkiste', text: 'Sammle 50 Wörter in deiner Wortliste.',     test: d => Object.keys(d.words).length >= 50 },
+    { id: 'words200', name: 'Wandelndes Lexikon', text: 'Sammle 200 Wörter in deiner Wortliste.', test: d => Object.keys(d.words).length >= 200 },
+    { id: 'daily1',   name: 'Tagesform',       text: 'Löse ein Tagesrätsel.',                     test: d => Object.keys(d.daily).length >= 1 },
+    { id: 'daily7',   name: 'Stammgast',       text: 'Löse sieben Tagesrätsel.',                  test: d => Object.keys(d.daily).length >= 7 },
+    { id: 'practice', name: 'Übung macht den Meister', text: 'Löse ein Übungsrätsel aus deiner Wortliste.', test: d => d.stats.practice >= 1 }
+  ].concat(KW.STAGES.map(s => ({
+    id: 'stage' + s.id, name: s.id + ' geschafft', text: 'Löse alle ' + s.levels + ' Rätsel der Stufe ' + s.id + '.',
+    test: d => Object.keys(d.levels).filter(k => k.startsWith(s.id + '-')).length >= s.levels
+  })));
+  Store.checkAchievements = function () {
+    const fresh = [];
+    KW.ACHIEVEMENTS.forEach(a => {
+      if (!this.data.achievements[a.id] && a.test(this.data)) { this.data.achievements[a.id] = KW.today(); fresh.push(a); }
+    });
+    return fresh;
+  };
+})(KW);
+
+/* ===== game.js ===== */
+/* ============================================================
+   game.js – Spielregeln für ein laufendes Rätsel (ohne DOM).
+   ============================================================ */
+(function (KW) {
+  const UMLAUT = { 'Ä': 'A', 'Ö': 'O', 'Ü': 'U', 'ß': 'S' };
+  const plain = s => Array.from(s).map(ch => UMLAUT[ch] || ch).join('');
+
+  /* Erklärt, was an einer falschen Eingabe nicht stimmt. */
+  KW.explainError = function (typed, answer, wrongCount) {
+    if (plain(typed) === plain(answer)) {
+      return answer.includes('ß') && !typed.includes('ß')
+        ? 'Fast richtig! Hier schreibt man ß – nach langem Vokal oder Doppellaut steht ß statt s.'
+        : 'Fast richtig! Achte auf den Umlaut: a/ä, o/ö und u/ü sind verschiedene Buchstaben.';
+    }
+    if (Array.from(typed).sort().join('') === Array.from(answer).sort().join('')) {
+      return /IE|EI/.test(answer)
+        ? 'Alle Buchstaben stimmen, nur die Reihenfolge nicht. Merke: „ie“ klingt wie langes i, „ei“ wie „ai“.'
+        : 'Alle Buchstaben stimmen, nur die Reihenfolge nicht.';
+    }
+    if (wrongCount === 1) return 'Nur ein Buchstabe stimmt noch nicht.';
+    if (wrongCount >= answer.length - 1) return 'Das ist ein anderes Wort. Lies den Hinweis noch einmal oder hol dir einen Tipp.';
+    return wrongCount + ' Buchstaben stimmen noch nicht.';
+  };
+
+  KW.Session = class {
+    constructor(puzzle, saved) {
+      this.puzzle = puzzle;
+      const n = puzzle.rows * puzzle.cols;
+      this.solution = new Array(n).fill('');
+      this.cellEntries = Array.from({ length: n }, () => []);
+      puzzle.entries.forEach((e, i) => e.cells.forEach((c, k) => { this.solution[c] = e.letters[k]; this.cellEntries[c].push(i); }));
+      const ok = saved && saved.id === puzzle.id && saved.fill && saved.fill.length === n;
+      this.fill = ok ? saved.fill.slice() : new Array(n).fill('');
+      this.solved = new Set(ok ? saved.solved : []);
+      this.revealed = new Set(ok ? saved.revealed : []);   // ganz aufgedeckte Wörter
+      this.given = new Set(ok ? saved.given : []);          // einzeln aufgedeckte Felder
+      this.tips = ok ? Object.assign({}, saved.tips) : {};
+      this.missed = ok ? Object.assign({}, saved.missed) : {};
+      this.penalty = ok ? saved.penalty : 0;
+      this.lastTry = {};
+      this.pending = {};   // Wort -> Felder, die nach einem Fehlversuch noch nicht überschrieben wurden
+      this.locked = new Set();
+      this.solved.forEach(i => puzzle.entries[i].cells.forEach(c => this.locked.add(c)));
+      this.given.forEach(c => this.locked.add(c));
+    }
+    serialize() {
+      return { id: this.puzzle.id, fill: this.fill, solved: [...this.solved], revealed: [...this.revealed], given: [...this.given],
+        tips: this.tips, missed: this.missed, penalty: this.penalty };
+    }
+    typed(i) { return this.puzzle.entries[i].cells.map(c => this.fill[c] || ' ').join(''); }
+    isFull(i) { return this.puzzle.entries[i].cells.every(c => this.fill[c]); }
+    get complete() { return this.solved.size === this.puzzle.entries.length; }
+
+    /* Setzt einen Buchstaben und prüft alle betroffenen, vollständig gefüllten Wörter. */
+    setLetter(cell, ch) {
+      if (this.locked.has(cell)) return [];
+      this.fill[cell] = ch;
+      this.cellEntries[cell].forEach(i => this.pending[i] && this.pending[i].delete(cell));
+      return ch ? this.cellEntries[cell].map(i => this.check(i)).filter(Boolean) : [];
+    }
+    check(i) {
+      if (this.solved.has(i) || !this.isFull(i)) return null;
+      const e = this.puzzle.entries[i], typed = this.typed(i), answer = e.word.answer;
+      if (typed === answer) {
+        this.solved.add(i); e.cells.forEach(c => this.locked.add(c));
+        return { entry: i, correct: true, clean: !this.revealed.has(i) && !this.missed[i] && !this.tips[i] };
+      }
+      if (this.pending[i] && this.pending[i].size) return null;   // wird gerade korrigiert: erst prüfen, wenn alle roten Felder neu sind
+      const wrong = e.cells.filter(c => this.fill[c] !== this.solution[c]);
+      this.pending[i] = new Set(wrong.filter(c => !this.locked.has(c)));
+      const repeat = this.lastTry[i] === typed;
+      this.lastTry[i] = typed;
+      if (!repeat) { this.missed[i] = (this.missed[i] || 0) + 1; this.penalty += 1; }
+      return { entry: i, correct: false, repeat, wrongCells: wrong, message: KW.explainError(typed, answer, wrong.length) };
+    }
+    /* Nächster Tipp: weitere Hinweisarten, die noch nicht gezeigt wurden. */
+    clueKinds(i, translations) {
+      const e = this.puzzle.entries[i];
+      let main = e.clue;
+      if (main === 'en' && !translations) main = 'def';
+      const rest = ['def', 'ex', 'en'].filter(k => k !== main && (k !== 'en' || translations));
+      return [main].concat(rest);
+    }
+    takeTip(i, translations) {
+      const kinds = this.clueKinds(i, translations), have = this.tips[i] || 0;
+      if (have >= kinds.length - 1) return false;
+      this.tips[i] = have + 1; this.penalty += 1;
+      return true;
+    }
+    revealLetter(cell) {
+      if (this.locked.has(cell) || !this.solution[cell]) return null;
+      this.fill[cell] = this.solution[cell];
+      this.given.add(cell); this.locked.add(cell); this.penalty += 1;
+      this.cellEntries[cell].forEach(i => { this.tips[i] = this.tips[i] || 0; this.missed[i] = this.missed[i] || 0; });
+      return this.cellEntries[cell].map(i => { const r = this.check(i); if (r) r.clean = false; return r; }).filter(Boolean);
+    }
+    revealWord(i) {
+      if (this.solved.has(i)) return [];
+      const e = this.puzzle.entries[i];
+      this.revealed.add(i); this.penalty += 3;
+      e.cells.forEach(c => { this.fill[c] = this.solution[c]; });
+      const touched = new Set(); e.cells.forEach(c => this.cellEntries[c].forEach(j => touched.add(j)));
+      return [...touched].map(j => { const r = this.check(j); if (r && j === i) r.clean = false; return r; }).filter(Boolean);
+    }
+    stars() { return this.penalty <= 1 ? 3 : this.penalty <= 5 ? 2 : 1; }
+  };
+
+  /* Wertet ein fertiges Rätsel aus und schreibt alles in den Spielstand. */
+  KW.finishPuzzle = function (session) {
+    const S = KW.Store, d = S.data, p = session.puzzle, stage = KW.stage(p.stageId);
+    const stars = session.stars(), mult = 1 + KW.STAGES.indexOf(stage) * 0.25;
+    const own = p.entries.filter((e, i) => !session.revealed.has(i)).length;
+    let xp = Math.round((own * 10 + stars * 10) * mult);
+    if (p.kind === 'daily') xp += 40;
+    if (p.kind === 'practice') xp = Math.round(xp * 0.6);
+    const before = S.rank();
+    let gained = xp, replay = false;
+
+    p.entries.forEach((e, i) => {
+      const w = S.wordEntry(e.word.answer);
+      const clean = !session.revealed.has(i) && !session.missed[i];
+      if (clean) { w.ok++; if (p.kind === 'practice' && w.auto) { w.hard = false; w.auto = false; } }
+      else { w.bad++; if (session.revealed.has(i) || session.missed[i] >= 2) { if (!w.hard) w.auto = true; w.hard = true; } }
+      w.seen = KW.today();
+    });
+    d.stats.correct += p.entries.filter((e, i) => !session.revealed.has(i)).length;
+    d.stats.wrong += Object.values(session.missed).reduce((a, b) => a + b, 0);
+    d.stats.hints += Object.values(session.tips).reduce((a, b) => a + b, 0) + session.given.size;
+    d.stats.reveals += session.revealed.size;
+
+    if (p.kind === 'level') {
+      const old = d.levels[p.id];
+      if (old) { replay = true; gained = Math.max(0, xp - old.xp); }
+      d.levels[p.id] = { stars: Math.max(stars, old ? old.stars : 0), xp: Math.max(xp, old ? old.xp : 0), date: KW.today() };
+    } else if (p.kind === 'daily') {
+      if (d.daily[p.date] != null) { replay = true; gained = 0; }
+      d.daily[p.date] = Math.max(stars, d.daily[p.date] || 0);
+    } else d.stats.practice++;
+    if (!replay) { d.stats.puzzles++; if (stars === 3) d.stats.perfect++; }
+    d.xp += gained;
+    const streakUp = S.touchStreak();
+    d.session = null;
+    const achievements = S.checkAchievements();
+    S.save();
+    const after = S.rank();
+    return { stars, xp: gained, replay, streakUp, streak: d.streak.count, achievements, rankUp: after.index > before.index ? after : null,
+      stageDone: p.kind === 'level' && !replay && S.stageProgress(p.stageId).done === stage.levels };
+  };
+})(KW);
+
+/* ===== ui.js ===== */
+/* ============================================================
+   ui.js – Oberfläche. Liest aus KW.Store und KW.Session,
+   enthält selbst keine Spielregeln.
+   ============================================================ */
+(function (KW) {
+  const S = KW.Store, root = document.getElementById('app');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const svg = (d, fill) => `<svg viewBox="0 0 24 24" ${fill ? 'fill="currentColor"' : 'fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"'} aria-hidden="true">${d}</svg>`;
+  const I = {
+    star: svg('<path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/>', true),
+    flame: svg('<path d="M12.5 2c.6 3.4-2 5-3.6 7.2C7.6 11 7 12.600 7 14.300a5.300 5.300 0 0 0 10.600 0c0-2-.9-3.600-2-4.900-.3 1.300-1 2.100-1.900 2.500.6-3.300-.3-7-1.200-9.900z"/>', true),
+    bolt: svg('<path d="M13.500 2L4.500 13.500H11l-1 8.500 9-11.500h-6.500z"/>', true),
+    back: svg('<path d="M15 5l-7 7 7 7"/>'), next: svg('<path d="M9 5l7 7-7 7"/>'),
+    lock: svg('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'),
+    bulb: svg('<path d="M9 18h6M10 21h4M8.500 14.500A6 6 0 1 1 15.500 14.500c-.700.600-1 1.300-1 2H9.500c0-.700-.300-1.400-1-2z"/>'),
+    letter: svg('<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9.500 16l2.500-8 2.500 8M10.300 13.500h3.400"/>'),
+    eye: svg('<path d="M2 12s3.600-6.500 10-6.500S22 12 22 12s-3.600 6.500-10 6.500S2 12 2 12z"/><circle cx="12" cy="12" r="2.800"/>'),
+    del: svg('<path d="M9 5h11v14H9l-6-7z"/><path d="M12.500 9.500l5 5M17.500 9.500l-5 5"/>'),
+    flag: svg('<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>'),
+    medal: svg('<circle cx="12" cy="14" r="6"/><path d="M8.500 9L6 3h4l2 4 2-4h4l-2.500 6"/>')
+  };
+  const stars = (n, big) => `<span class="stars${big ? ' big' : ''}" role="img" aria-label="${n} von 3 Sternen">${[0, 1, 2].map(i => `<span class="${i < n ? 'on' : ''}" style="--i:${i}">${I.star}</span>`).join('')}</span>`;
+  const coarse = () => { try { return matchMedia('(pointer: coarse)').matches; } catch (e) { return false; } };
+
+  const ui = { screen: 'home', tabStage: null, filter: 'all', result: null, resetArmed: false };
+  let G = null;   // laufendes Spiel: { s, sel, cur, bad:Set, fb }
+
+  /* ---------- Design ---------- */
+  const hostTheme = document.documentElement.getAttribute('data-theme');
+  function applyTheme() {
+    const t = S.data.settings.theme, el = document.documentElement;
+    if (t === 'system') { hostTheme ? el.setAttribute('data-theme', hostTheme) : el.removeAttribute('data-theme'); }
+    else el.setAttribute('data-theme', t);
+  }
+
+  /* ---------- Navigation ---------- */
+  function go(screen) { ui.screen = screen; ui.resetArmed = false; render(); window.scrollTo(0, 0); }
+  function render() {
+    root.innerHTML = ({ home, levels, game, result, words, awards, settings })[ui.screen]();
+    if (ui.screen === 'game') paintGame();
+  }
+  const topBar = (title, sub, right) => `<header class="bar"><button class="icon-btn" data-act="home" aria-label="Zur Startseite">${I.back}</button><h1>${title}${sub ? `<span class="sub">${sub}</span>` : ''}</h1>${right || ''}</header>`;
+
+  /* ---------- Startbildschirm ---------- */
+  function home() {
+    const d = S.data, st = KW.stage(d.stage), prog = S.stageProgress(st.id), next = S.nextLevel(st.id), rank = S.rank();
+    const sess = d.session && d.session.ref, today = KW.today(), dailyDone = d.daily[today] != null;
+    const learned = Object.keys(d.words).length, hard = Object.values(d.words).filter(w => w.hard).length;
+    const got = Object.keys(d.achievements).length;
+    const play = sess
+      ? `<button class="btn primary play" data-act="resume"><span>Weiterspielen<small>${esc(sess.label)} · angefangen</small></span>${I.next}</button>`
+      : next ? `<button class="btn primary play" data-act="play" data-id="${next.id}"><span>Spielen<small>${st.id} · Rätsel ${next.index + 1} von ${st.levels}</small></span>${I.next}</button>`
+        : `<button class="btn primary play" data-act="levels"><span>Stufe ${st.id} geschafft<small>Wähle eine neue Stufe oder spiele ein Rätsel erneut</small></span>${I.next}</button>`;
+    return `<div class="screen">
+      <div class="home-top"><span class="wordmark">Wortkreuz</span>
+        <span class="seg"><span class="chip flame" title="Lernserie">${I.flame}${S.streakNow()} ${S.streakNow() === 1 ? 'Tag' : 'Tage'}</span><span class="chip xp" title="Erfahrungspunkte">${I.bolt}${d.xp} XP</span></span></div>
+      <section class="hero">
+        <div class="logo" aria-hidden="true">
+          <b style="grid-area:1/3">K</b><b style="grid-area:2/1">W</b><b style="grid-area:2/2">O</b><b class="x" style="grid-area:2/3">R</b><b style="grid-area:2/4">T</b>
+          <b style="grid-area:3/3">E</b><b style="grid-area:4/3">U</b><b style="grid-area:5/3">Z</b></div>
+        <div><h1>Deutsch lernen, Wort für Wort.</h1><p>${KW.totalLevels()} Kreuzworträtsel von A1 bis C1. Jedes gelöste Wort landet mit Artikel, Übersetzung und Beispielsatz in deiner Wortliste.</p></div>
+      </section>
+      ${play}
+      <section class="card stage-card">
+        <div class="stage-head"><div><span class="label">Deine Lernstufe</span><h2>${st.id} · ${st.name}</h2></div>
+          <div class="seg" role="group" aria-label="Lernstufe wählen">${KW.STAGES.map(s => `<button data-act="stage" data-id="${s.id}" aria-pressed="${s.id === st.id}">${s.id}</button>`).join('')}</div></div>
+        <p class="muted small">${st.blurb}</p>
+        <div class="meter" role="img" aria-label="${prog.done} von ${prog.total} Rätseln gelöst"><i style="width:${prog.done / prog.total * 100}%"></i></div>
+        <div class="row small"><span>${prog.done} von ${prog.total} Rätseln gelöst</span><span class="muted">${prog.stars} von ${prog.total * 3} Sternen</span></div>
+      </section>
+      <div class="duo">
+        <button class="card daily" data-act="daily">
+          <span class="row"><span class="label">Tagesrätsel · ${new Date().toLocaleDateString('de-DE', { day: 'numeric', month: 'long' })}</span><span class="tag ${dailyDone ? 'done' : ''}">${dailyDone ? 'Gelöst' : '+40 XP'}</span></span>
+          <h2>${dailyDone ? 'Für heute geschafft' : 'Acht Wörter aus ' + st.id}</h2>
+          <span class="muted small">${dailyDone ? 'Morgen wartet ein neues Rätsel. Du kannst das heutige noch einmal spielen.' : 'Jeden Tag ein neues Rätsel. Es hält deine Lernserie am Laufen.'}</span>
+        </button>
+        <section class="card">
+          <span class="row"><span class="label">Rang ${rank.index}</span><span class="small muted">${rank.next ? rank.into + ' / ' + rank.step + ' XP' : 'Höchster Rang'}</span></span>
+          <h2>${rank.name}</h2>
+          <div class="meter"><i style="width:${rank.into / rank.step * 100}%"></i></div>
+          <span class="muted small">${rank.next ? 'Nächster Rang: ' + rank.next : 'Du hast alle Ränge erreicht.'}</span>
+        </section>
+      </div>
+      <nav class="menu">
+        <button class="btn" data-act="levels">Level auswählen<small>${S.totalDone()} von ${KW.totalLevels()} gelöst</small></button>
+        <button class="btn" data-act="words">Wortliste<small>${learned} ${learned === 1 ? 'Wort' : 'Wörter'}${hard ? ', ' + hard + ' schwierig' : ''}</small></button>
+        <button class="btn" data-act="awards">Erfolge<small>${got} von ${KW.ACHIEVEMENTS.length} erreicht</small></button>
+        <button class="btn" data-act="settings">Einstellungen<small>Design, Hinweise, Tastatur</small></button>
+      </nav>
+      ${S.persistent ? '' : '<p class="note">Dieser Browser erlaubt gerade kein Speichern. Dein Fortschritt gilt nur, solange die Seite offen ist.</p>'}
+    </div>`;
+  }
+
+  /* ---------- Levelwahl ---------- */
+  function levels() {
+    const id = ui.tabStage || S.data.stage, st = KW.stage(id), list = KW.stageLevels(id), next = S.nextLevel(id), prog = S.stageProgress(id);
+    return `<div class="screen">${topBar('Level auswählen', `${st.id} · ${st.name} · ${prog.done} von ${prog.total} gelöst`)}
+      <div class="seg" role="group" aria-label="Lernstufe">${KW.STAGES.map(s => `<button data-act="tab" data-id="${s.id}" aria-pressed="${s.id === id}">${s.id}</button>`).join('')}</div>
+      <p class="muted small">${st.blurb}. Jedes gelöste Rätsel schaltet das nächste frei. Du kannst jederzeit in einer anderen Stufe beginnen.</p>
+      <div class="levels">${list.map(l => {
+        const rec = S.data.levels[l.id], open = S.isUnlocked(l);
+        return `<button class="lv ${rec ? 'done' : open ? (next && next.id === l.id ? 'next' : '') : 'locked'}" ${open ? `data-act="play" data-id="${l.id}"` : 'disabled'} aria-label="Rätsel ${l.index + 1}${rec ? ', ' + rec.stars + ' Sterne' : open ? '' : ', gesperrt'}">
+          ${l.review ? '<em title="Enthält Wörter zur Wiederholung">Wdh.</em>' : ''}<b>${l.index + 1}</b>${rec ? stars(rec.stars) : open ? `<span class="small muted">${l.entries.length} Wörter</span>` : I.lock}</button>`;
+      }).join('')}</div></div>`;
+  }
+
+  /* ---------- Spiel ---------- */
+  function puzzleLabel(p) {
+    return p.kind === 'daily' ? 'Tagesrätsel ' + p.stageId : p.kind === 'practice' ? 'Übungsrätsel' : p.stageId + ' · Rätsel ' + (p.index + 1);
+  }
+  function refOf(p, extra) { return Object.assign({ kind: p.kind, id: p.id, stageId: p.stageId, date: p.date, label: puzzleLabel(p) }, extra); }
+  function start(puzzle, ref, resume) {
+    const s = new KW.Session(puzzle, resume ? S.data.session : null);
+    G = { s, sel: 0, cur: 0, bad: new Set(), fb: null, ref };
+    const first = puzzle.entries.findIndex((e, i) => !s.solved.has(i));
+    select(first < 0 ? 0 : first, true);
+    persist(); go('game');
+  }
+  function persist() { S.data.session = Object.assign(G.s.serialize(), { ref: G.ref }); S.save(); }
+  function resume() {
+    const ses = S.data.session, r = ses && ses.ref; let p = null;
+    if (r) p = r.kind === 'level' ? KW.level(r.id) : r.kind === 'daily' ? (r.date === KW.today() ? KW.dailyPuzzle(r.stageId, r.date) : null) : KW.practicePuzzle(r.answers || [], r.seed);
+    if (!p || p.id !== ses.id) { S.data.session = null; S.save(); return go('home'); }
+    start(p, r, true);
+  }
+  function select(i, jump) {
+    G.sel = i;
+    const e = G.s.puzzle.entries[i];
+    if (jump || !e.cells.includes(G.cur)) G.cur = e.cells.find(c => !G.s.locked.has(c) && !G.s.fill[c]) ?? e.cells.find(c => !G.s.locked.has(c)) ?? e.cells[0];
+  }
+  const CLUE_LABEL = { en: 'Übersetzung', def: 'Umschreibung', ex: 'Lückensatz' };
+  function clueText(e, kind) {
+    return kind === 'en' ? `Englisch: „${esc(e.word.en)}“` : kind === 'ex' ? esc(e.word.ex) : esc(e.word.def);
+  }
+  function game() {
+    const p = G.s.puzzle, set = S.data.settings, showKb = set.keyboard === 'always' || (set.keyboard === 'auto' && coarse());
+    const starts = {}; p.entries.forEach(e => { starts[e.cells[0]] = e.num; });
+    const cells = G.s.solution.map((ch, c) => ch ? `<button class="cell" data-act="cell" data-c="${c}" style="grid-area:${Math.floor(c / p.cols) + 1}/${c % p.cols + 1}" tabindex="-1">${starts[c] ? `<i class="n">${starts[c]}</i>` : ''}<span></span></button>` : '').join('');
+    const list = dir => p.entries.map((e, i) => e.dir === dir ? `<li data-e="${i}"><button data-act="entry" data-e="${i}"><b>${e.num}</b><span>${clueText(e, G.s.clueKinds(i, set.translations)[0])} <span class="muted">(${e.letters.length})</span></span></button></li>` : '').join('');
+    const row = keys => `<div>${Array.from(keys).map(k => `<button data-act="key" data-k="${k}">${k}</button>`).join('')}</div>`;
+    const kb = showKb
+      ? `<div class="kb" aria-label="Tastatur">${row('QWERTZUIOPÜ')}${row('ASDFGHJKLÖÄ')}<div>${Array.from('YXCVBNMß').map(k => `<button data-act="key" data-k="${k}">${k}</button>`).join('')}<button class="wide" data-act="key" data-k="DEL" aria-label="Löschen">${I.del}</button></div></div>`
+      : `<input id="sysin" class="sysin" type="text" value=" " aria-label="Buchstaben eingeben" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="next"><div class="kb mini"><div><span>Sonderzeichen:</span>${Array.from('ÄÖÜß').map(k => `<button data-act="key" data-k="${k}">${k}</button>`).join('')}</div></div>`;
+    return `<div class="screen">${topBar(puzzleLabel(p), '<span id="count"></span>', '<span id="live" class="chip"></span>')}
+      <div class="game">
+        <div class="board-wrap"><div class="board" id="board" style="--cols:${p.cols}" role="group" aria-label="Kreuzworträtsel">${cells}</div></div>
+        <details class="lists" id="lists" ${coarse() ? '' : 'open'}><summary>Alle Hinweise</summary><div class="cols">
+          <div><span class="label">Waagerecht</span><ol>${list('a')}</ol></div><div><span class="label">Senkrecht</span><ol>${list('d')}</ol></div></div></details>
+        <div class="dock">
+          <div class="clue" id="clue" aria-live="polite"></div>
+          <div class="tools">
+            <button class="btn" data-act="tip" id="tip">${I.bulb}<span>Tipp</span></button>
+            <button class="btn" data-act="letter">${I.letter}<span>Buchstabe</span></button>
+            <button class="btn" data-act="word">${I.eye}<span>Wort<span class="long"> aufdecken</span></span></button>
+          </div>${kb}
+        </div>
+      </div></div>`;
+  }
+  function paintGame() {
+    const s = G.s, p = s.puzzle, e = p.entries[G.sel], set = S.data.settings;
+    const inSel = new Set(e.cells);
+    root.querySelectorAll('.cell').forEach(el => {
+      const c = +el.dataset.c, done = s.cellEntries[c].some(i => s.solved.has(i));
+      el.lastElementChild.textContent = s.fill[c] || '';
+      el.classList.toggle('sel', inSel.has(c)); el.classList.toggle('cur', c === G.cur);
+      el.classList.toggle('ok', done); el.classList.toggle('given', !done && s.given.has(c));
+      el.classList.toggle('bad', G.bad.has(c) && !done);
+    });
+    root.querySelectorAll('#lists li').forEach(li => { const i = +li.dataset.e; li.classList.toggle('on', i === G.sel); li.classList.toggle('done', s.solved.has(i)); });
+    const kinds = s.clueKinds(G.sel, set.translations), shown = s.tips[G.sel] || 0, solved = s.solved.has(G.sel);
+    const extra = kinds.slice(1, 1 + shown).map(k => `<div class="extra">${CLUE_LABEL[k]}: ${clueText(e, k)}</div>`).join('');
+    document.getElementById('clue').innerHTML = `<div class="meta"><b>${e.num} ${e.dir === 'a' ? 'waagerecht' : 'senkrecht'}</b><span>${CLUE_LABEL[kinds[0]]}</span><span>${e.word.kind} · ${e.letters.length} Buchstaben</span></div>
+      <div class="text">${clueText(e, kinds[0])}</div>${extra}${G.fb ? `<div class="fb ${G.fb.type}">${G.fb.html}</div>` : ''}`;
+    const tip = document.getElementById('tip'); tip.disabled = solved || shown >= kinds.length - 1;
+    document.getElementById('count').textContent = `${s.solved.size} von ${p.entries.length} Wörtern`;
+    document.getElementById('live').innerHTML = stars(s.stars());
+  }
+  function animate(cells, cls) {
+    if (!S.data.settings.motion) return;
+    cells.forEach((c, k) => { const el = root.querySelector(`.cell[data-c="${c}"]`); if (!el) return; el.style.setProperty('--i', k); el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 1100); });
+  }
+  function handle(results) {
+    const s = G.s, p = s.puzzle; let good = null, bad = null;
+    results.forEach(r => {
+      const e = p.entries[r.entry];
+      if (r.correct) { good = r; e.cells.forEach(c => G.bad.delete(c)); }
+      else if (!bad || r.entry === G.sel) bad = r;
+    });
+    if (good) {
+      const w = p.entries[good.entry].word;
+      G.fb = { type: 'good', html: `Richtig: <b>${esc(KW.display(w))}</b> – ${esc(w.en)}${w.article ? ' · Nomen schreibt man groß.' : ''}` };
+    } else if (bad) {
+      if (S.data.settings.markErrors) bad.wrongCells.forEach(c => G.bad.add(c));
+      G.fb = { type: 'bad', html: esc(bad.message) + (S.data.settings.markErrors ? ' Die falschen Felder sind rot markiert.' : '') };
+    }
+    persist();
+    if (s.complete) { paintGame(); results.filter(r => r.correct).forEach(r => animate(p.entries[r.entry].cells, 'pop')); return setTimeout(finish, S.data.settings.motion ? 950 : 200); }
+    if (good && s.solved.has(G.sel)) {
+      const n = p.entries.length; let j = G.sel;
+      for (let k = 1; k <= n; k++) { const i = (G.sel + k) % n; if (!s.solved.has(i)) { j = i; break; } }
+      select(j, true);
+    }
+    paintGame();
+    results.forEach(r => r.correct ? animate(p.entries[r.entry].cells, 'pop') : (r.entry === (bad && bad.entry) && animate(p.entries[r.entry].cells, 'shake')));
+  }
+  function type(ch) {
+    const s = G.s, e = s.puzzle.entries[G.sel];
+    let cell = G.cur;
+    if (s.locked.has(cell)) { const nx = e.cells.slice(e.cells.indexOf(cell) + 1).find(c => !s.locked.has(c)); if (nx == null) return; cell = G.cur = nx; }
+    G.bad.delete(cell); G.fb = null;
+    const results = s.setLetter(cell, ch);
+    const rest = e.cells.slice(e.cells.indexOf(cell) + 1);
+    const nx = rest.find(c => !s.locked.has(c) && !s.fill[c]) ?? rest.find(c => !s.locked.has(c));
+    if (nx != null) G.cur = nx;
+    handle(results);
+  }
+  function erase() {
+    const s = G.s, e = s.puzzle.entries[G.sel]; let k = e.cells.indexOf(G.cur);
+    if (s.locked.has(G.cur) || !s.fill[G.cur]) { do k--; while (k >= 0 && s.locked.has(e.cells[k])); if (k < 0) return; G.cur = e.cells[k]; }
+    s.fill[G.cur] = ''; G.bad.delete(G.cur); G.fb = null; persist(); paintGame();
+  }
+  function tapCell(c) {
+    const s = G.s, mine = s.cellEntries[c];
+    if (c === G.cur && mine.length > 1) G.sel = mine.find(i => i !== G.sel);
+    else if (!mine.includes(G.sel)) G.sel = mine.find(i => !s.solved.has(i)) ?? mine[0];
+    G.cur = c; G.fb = null; paintGame();
+  }
+  function move(dr, dc) {
+    const p = G.s.puzzle, r = Math.floor(G.cur / p.cols) + dr, c = G.cur % p.cols + dc;
+    if (r < 0 || c < 0 || r >= p.rows || c >= p.cols || !G.s.solution[r * p.cols + c]) return;
+    G.cur = r * p.cols + c;
+    const want = dc ? 'a' : 'd', mine = G.s.cellEntries[G.cur];
+    G.sel = mine.find(i => p.entries[i].dir === want) ?? (mine.includes(G.sel) ? G.sel : mine[0]);
+    paintGame();
+  }
+  function step(dir) {
+    const s = G.s, n = s.puzzle.entries.length;
+    for (let k = 1; k <= n; k++) { const i = (G.sel + dir * k + n * n) % n; if (!s.solved.has(i)) { select(i, true); break; } }
+    G.fb = null; paintGame();
+  }
+  function finish() {
+    if (!G || !G.s.complete || ui.screen !== 'game') return;
+    ui.result = { res: KW.finishPuzzle(G.s), session: G.s, ref: G.ref };
+    go('result'); confetti(ui.result.res.stars);
+  }
+  function confetti(n) {
+    if (!S.data.settings.motion || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    const box = document.createElement('div'); box.className = 'confetti';
+    const colors = ['var(--accent)', 'var(--marker)', 'var(--green)', 'var(--red)', 'var(--gold)'];
+    for (let i = 0; i < n * 14; i++) { const el = document.createElement('i'); el.style.cssText = `left:${Math.random() * 100}%;background:${colors[i % 5]};animation-delay:${Math.random() * .5}s;animation-duration:${1.4 + Math.random()}s`; box.appendChild(el); }
+    document.body.appendChild(box); setTimeout(() => box.remove(), 3200);
+  }
+
+  /* ---------- Ergebnis ---------- */
+  function sentence(w) {
+    const word = w.ex.startsWith('___') ? w.lemma[0].toUpperCase() + w.lemma.slice(1) : w.lemma;
+    return esc(w.ex).replace(/___/g, `<b>${esc(word)}</b>`);
+  }
+  function wordRow(w, rec, withStats) {
+    return `<div class="w"><div><h3>${w.article ? `<i>${w.article}</i> ` : ''}${esc(w.lemma)}</h3><span class="en">${esc(w.en)} · ${w.stage}${w.kind !== 'Wort' ? ' · ' + w.kind : ''}</span></div>
+      <button class="hard" data-act="hard" data-w="${esc(w.answer)}" aria-pressed="${!!rec.hard}" aria-label="Als schwierig markieren" title="Als schwierig markieren">${I.flag}</button>
+      <div class="ex">${sentence(w)}</div>${withStats ? `<div class="st">${esc(w.def)}<br>${rec.ok}× sicher gelöst · ${rec.bad}× mit Fehler oder Hilfe</div>` : ''}</div>`;
+  }
+  function result() {
+    const { res, session } = ui.result, p = session.puzzle, st = KW.stage(p.stageId);
+    const title = ['Geschafft!', 'Gut gemacht!', 'Ausgezeichnet!'][res.stars - 1];
+    const why = res.stars === 3 ? 'Ohne Hilfe und fast ohne Fehler gelöst.' : `Tipps, aufgedeckte Felder und Fehlversuche kosten Sterne (${session.penalty} Punkte Abzug). Spiel das Rätsel erneut für drei Sterne.`;
+    const nextLv = p.kind === 'level' ? KW.stageLevels(p.stageId)[p.index + 1] : null;
+    const nextStage = KW.STAGES[KW.STAGES.indexOf(st) + 1];
+    const main = p.kind === 'level'
+      ? (nextLv ? `<button class="btn primary" data-act="play" data-id="${nextLv.id}">Nächstes Rätsel ${I.next}</button>`
+        : nextStage ? `<button class="btn primary" data-act="stage-go" data-id="${nextStage.id}">Weiter mit ${nextStage.id} ${I.next}</button>` : `<button class="btn primary" data-act="home">Zur Startseite</button>`)
+      : `<button class="btn primary" data-act="${S.nextLevel(S.data.stage) ? 'play' : 'home'}" data-id="${(S.nextLevel(S.data.stage) || {}).id || ''}">Weiter lernen ${I.next}</button>`;
+    return `<div class="screen result">
+      <div class="big">${[0, 1, 2].map(i => `<span class="${i < res.stars ? 'on' : ''}" style="--i:${i}">${I.star}</span>`).join('')}</div>
+      <div><h1>${title}</h1><p class="muted">${puzzleLabel(p)} · ${why}</p></div>
+      <div class="gains"><span class="chip xp">${I.bolt}+${res.xp} XP${res.replay ? ' (Wiederholung)' : ''}</span><span class="chip flame">${I.flame}${res.streak} ${res.streak === 1 ? 'Tag' : 'Tage'} Lernserie${res.streakUp ? ' · heute verlängert' : ''}</span></div>
+      ${res.rankUp ? `<div class="card unlock">${I.medal}<div><b>Neuer Rang: ${res.rankUp.name}</b><br><span class="small">Du hast Rang ${res.rankUp.index} erreicht.</span></div></div>` : ''}
+      ${res.achievements.map(a => `<div class="card unlock">${I.medal}<div><b>Erfolg: ${a.name}</b><br><span class="small">${a.text}</span></div></div>`).join('')}
+      ${res.stageDone ? `<div class="card unlock">${I.medal}<div><b>Stufe ${st.id} abgeschlossen</b><br><span class="small">Alle ${st.levels} Rätsel gelöst.</span></div></div>` : ''}
+      <div class="actions">${main}<button class="btn" data-act="replay">Noch einmal spielen</button><button class="btn" data-act="home">Startseite</button></div>
+      <div><span class="label">Wörter aus diesem Rätsel</span><p class="muted small">Lies jeden Satz einmal laut. Mit der Fahne merkst du dir Wörter zum Üben vor.</p></div>
+      <div class="card review">${p.entries.map(e => wordRow(e.word, S.wordEntry(e.word.answer))).join('')}</div>
+    </div>`;
+  }
+
+  /* ---------- Wortliste ---------- */
+  function words() {
+    const all = S.learnedWords().sort((a, b) => (b.hard - a.hard) || a.word.lemma.localeCompare(b.word.lemma, 'de'));
+    const hard = all.filter(w => w.hard), list = ui.filter === 'hard' ? hard : all;
+    const pool = hard.length >= 4 ? hard : all;
+    return `<div class="screen">${topBar('Wortliste', `${all.length} gelernt · ${hard.length} schwierig`)}
+      <div class="filters"><div class="seg" role="group" aria-label="Filter"><button data-act="filter" data-id="all" aria-pressed="${ui.filter === 'all'}">Alle</button><button data-act="filter" data-id="hard" aria-pressed="${ui.filter === 'hard'}">Schwierige</button></div>
+        <button class="btn primary" data-act="practice" ${pool.length < 4 ? 'disabled' : ''}>Übungsrätsel ${hard.length >= 4 ? 'aus schwierigen Wörtern' : 'aus meinen Wörtern'}</button></div>
+      ${pool.length < 4 ? '<p class="muted small">Ab vier Wörtern in der Liste baut das Spiel daraus ein eigenes Übungsrätsel.</p>' : ''}
+      ${list.length ? `<div class="card review">${list.map(w => wordRow(w.word, w, true)).join('')}</div>`
+        : `<div class="card empty">${ui.filter === 'hard' ? 'Noch keine schwierigen Wörter. Wörter, die du aufdeckst oder zweimal falsch schreibst, erscheinen hier automatisch.' : 'Hier sammeln sich alle Wörter, die du in Rätseln gelöst hast.'}</div>`}
+    </div>`;
+  }
+
+  /* ---------- Erfolge ---------- */
+  function awards() {
+    const d = S.data, total = d.stats.correct + d.stats.wrong;
+    return `<div class="screen">${topBar('Erfolge', `${Object.keys(d.achievements).length} von ${KW.ACHIEVEMENTS.length} erreicht`)}
+      <div class="facts">
+        <div><b>${d.stats.puzzles}</b><span>Rätsel gelöst</span></div><div><b>${S.totalStars()}</b><span>Sterne in Levels</span></div>
+        <div><b>${d.stats.correct}</b><span>richtige Wörter</span></div><div><b>${d.stats.wrong}</b><span>Fehlversuche</span></div>
+        <div><b>${total ? Math.round(d.stats.correct / total * 100) + ' %' : '–'}</b><span>Trefferquote</span></div><div><b>${d.streak.best}</b><span>längste Serie (Tage)</span></div>
+      </div>
+      <div class="awards">${KW.ACHIEVEMENTS.map(a => `<div class="award ${d.achievements[a.id] ? 'on' : ''}">${d.achievements[a.id] ? I.medal : I.lock}<div><b>${a.name}</b><span>${a.text}</span></div></div>`).join('')}</div>
+    </div>`;
+  }
+
+  /* ---------- Einstellungen ---------- */
+  function settings() {
+    const s = S.data.settings;
+    const seg = (key, opts) => `<div class="seg" role="group">${opts.map(([v, t]) => `<button data-act="set" data-key="${key}" data-val="${v}" aria-pressed="${s[key] === v}">${t}</button>`).join('')}</div>`;
+    const sw = (key, label) => `<button class="switch" role="switch" data-act="toggle" data-key="${key}" aria-checked="${!!s[key]}" aria-label="${label}"></button>`;
+    return `<div class="screen">${topBar('Einstellungen')}
+      <section class="card">
+        <div class="set"><div><b>Lernstufe</b><p>Bestimmt, welche Rätsel „Spielen“ und das Tagesrätsel verwenden.</p></div><div class="seg" role="group">${KW.STAGES.map(x => `<button data-act="stage" data-id="${x.id}" aria-pressed="${x.id === S.data.stage}">${x.id}</button>`).join('')}</div></div>
+        <div class="set"><div><b>Design</b><p>Hell wie ein Schulheft oder dunkel wie eine Tafel.</p></div>${seg('theme', [['system', 'System'], ['light', 'Hell'], ['dark', 'Dunkel']])}</div>
+        <div class="set"><div><b>Englische Übersetzungen</b><p>Als Hinweisart und als Tipp. Ausgeschaltet lernst du nur mit deutschen Umschreibungen.</p></div>${sw('translations', 'Englische Übersetzungen')}</div>
+        <div class="set"><div><b>Falsche Buchstaben markieren</b><p>Zeigt nach einem Fehlversuch, welche Felder nicht stimmen.</p></div>${sw('markErrors', 'Falsche Buchstaben markieren')}</div>
+        <div class="set"><div><b>Animationen</b><p>Bewegung beim Lösen und Konfetti am Ende.</p></div>${sw('motion', 'Animationen')}</div>
+        <div class="set"><div><b>Tastatur</b><p>„Eingebaut“ zeigt die Spieltastatur mit ä, ö, ü und ß. „Vom Gerät“ öffnet beim Antippen eines Feldes die Tastatur deines Handys. „Automatisch“ wählt auf Handys die eingebaute.</p></div>${seg('keyboard', [['auto', 'Automatisch'], ['always', 'Eingebaut'], ['never', 'Vom Gerät']])}</div>
+      </section>
+      <section class="card">
+        <div class="set"><div><b>Spielstand</b><p>${S.persistent ? 'Dein Fortschritt wird in diesem Browser gespeichert und bleibt nach dem Schließen erhalten. Auf anderen Geräten beginnt ein eigener Spielstand.' : 'Dieser Browser erlaubt gerade kein Speichern.'}</p></div>
+          ${ui.resetArmed ? `<div class="seg"><button class="btn danger" data-act="reset-yes">Wirklich alles löschen</button><button class="btn" data-act="reset-no">Abbrechen</button></div>` : `<button class="btn danger" data-act="reset">Spielstand zurücksetzen</button>`}</div>
+      </section></div>`;
+  }
+
+  /* ---------- Ereignisse ---------- */
+  const actions = {
+    home: () => go('home'), levels: () => { ui.tabStage = S.data.stage; go('levels'); }, words: () => go('words'), awards: () => go('awards'), settings: () => go('settings'),
+    stage: el => { S.data.stage = el.dataset.id; S.save(); render(); },
+    'stage-go': el => { S.data.stage = ui.tabStage = el.dataset.id; S.save(); go('levels'); },
+    tab: el => { ui.tabStage = el.dataset.id; render(); },
+    play: el => { const l = KW.level(el.dataset.id); if (l && S.isUnlocked(l)) start(l, refOf(l)); },
+    resume,
+    daily: () => { const p = KW.dailyPuzzle(S.data.stage, KW.today()); start(p, refOf(p)); },
+    practice: () => {
+      const all = S.learnedWords(), hard = all.filter(w => w.hard), pool = (hard.length >= 4 ? hard : all).map(w => w.word.answer), seed = Date.now().toString(36);
+      const p = KW.practicePuzzle(pool, seed); if (p) start(p, refOf(p, { answers: pool, seed }));
+    },
+    replay: () => { const r = ui.result.ref, p = ui.result.session.puzzle; start(p, r); },
+    filter: el => { ui.filter = el.dataset.id; render(); },
+    hard: el => { const w = S.wordEntry(el.dataset.w); w.hard = !w.hard; w.auto = false; S.save(); el.setAttribute('aria-pressed', w.hard); },
+    set: el => { S.data.settings[el.dataset.key] = el.dataset.val; S.save(); applyTheme(); render(); },
+    toggle: el => { const k = el.dataset.key; S.data.settings[k] = !S.data.settings[k]; S.save(); render(); },
+    reset: () => { ui.resetArmed = true; render(); }, 'reset-no': () => { ui.resetArmed = false; render(); },
+    'reset-yes': () => { S.reset(); G = null; applyTheme(); go('home'); },
+    cell: el => tapCell(+el.dataset.c),
+    entry: el => { select(+el.dataset.e, true); G.fb = null; paintGame(); },
+    key: el => el.dataset.k === 'DEL' ? erase() : type(el.dataset.k),
+    tip: () => { if (G.s.takeTip(G.sel, S.data.settings.translations)) { G.fb = null; persist(); paintGame(); } },
+    letter: () => {
+      const s = G.s, e = s.puzzle.entries[G.sel];
+      const c = !s.locked.has(G.cur) ? G.cur : e.cells.find(x => !s.locked.has(x));
+      if (c == null) return;
+      const res = s.revealLetter(c); if (!res) return;
+      G.bad.delete(c); G.fb = { type: 'info', html: 'Ein Buchstabe wurde eingetragen. Das kostet einen Punkt bei den Sternen.' };
+      const nx = e.cells.find(x => !s.locked.has(x) && !s.fill[x]); if (nx != null) G.cur = nx;
+      res.length ? handle(res) : (persist(), paintGame());
+    },
+    word: () => { if (!G.s.solved.has(G.sel)) handle(G.s.revealWord(G.sel)); }
+  };
+  root.addEventListener('click', ev => {
+    const el = ev.target.closest('[data-act]');
+    if (el && !el.disabled && actions[el.dataset.act]) actions[el.dataset.act](el);
+    if (el && ui.screen === 'game' && /^(cell|entry|key|tip|letter|word|play|resume|daily|practice|replay)$/.test(el.dataset.act)) focusSys();
+  });
+  /* Handy-Tastatur: Ein unsichtbares Textfeld nimmt die Eingabe an. Es enthält immer ein Leerzeichen,
+     damit auch die Löschtaste ein Ereignis auslöst. */
+  let sysPrev = ' ';
+  function focusSys() { const el = document.getElementById('sysin'); if (el && document.activeElement !== el) { el.value = sysPrev = ' '; try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } try { el.setSelectionRange(1, 1); } catch (e) {} } }
+  root.addEventListener('input', ev => {
+    const el = ev.target; if (el.id !== 'sysin' || !G) return;
+    const v = el.value;
+    if (v.length < sysPrev.length) { for (let i = v.length; i < sysPrev.length; i++) erase(); }
+    else Array.from(v.replace(/ /g, '')).slice(Array.from(sysPrev.replace(/ /g, '')).length).forEach(c => { const ch = KW.upper(c); if (KW.isLetter(ch) && ui.screen === 'game') type(ch); });
+    sysPrev = v;
+    if (!ev.isComposing || v.length > 24) el.value = sysPrev = ' ';
+  });
+  root.addEventListener('compositionend', ev => { if (ev.target.id === 'sysin') ev.target.value = sysPrev = ' '; });
+  document.addEventListener('keydown', ev => {
+    if (ui.screen !== 'game' || !G || ev.ctrlKey || ev.metaKey || ev.altKey && !/^[äöüßÄÖÜ]$/.test(ev.key)) return;
+    const k = ev.key;
+    if (k === 'Backspace' || k === 'Delete') { ev.preventDefault(); return erase(); }
+    if (k === 'ArrowLeft') { ev.preventDefault(); return move(0, -1); } if (k === 'ArrowRight') { ev.preventDefault(); return move(0, 1); }
+    if (k === 'ArrowUp') { ev.preventDefault(); return move(-1, 0); } if (k === 'ArrowDown') { ev.preventDefault(); return move(1, 0); }
+    if (k === 'Tab' || k === 'Enter') { if (ev.target.closest && ev.target.closest('.icon-btn, .tools, summary') && k === 'Enter') return; ev.preventDefault(); return step(ev.shiftKey ? -1 : 1); }
+    if (k === ' ') { ev.preventDefault(); return tapCell(G.cur); }
+    if (k.length === 1) { const ch = KW.upper(k); if (KW.isLetter(ch)) { ev.preventDefault(); type(ch); } }
+  });
+
+  /* ---------- Start ---------- */
+  S.load(); applyTheme();
+  S.streakNow() || (S.data.streak.count = 0);
+  render();
+  KW.ui = { go, start };
+})(KW);
+</script>

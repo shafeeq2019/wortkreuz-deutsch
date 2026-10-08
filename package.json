@@ -1,0 +1,10 @@
+{
+  "name": "wortkreuz-deutsch",
+  "version": "1.0.0",
+  "description": "Kreuzworträtsel-Lernspiel für Deutsch (A1–C1)",
+  "private": true,
+  "scripts": {
+    "build": "node build.js",
+    "test": "node test.js"
+  }
+}
