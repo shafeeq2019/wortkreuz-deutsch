@@ -8,13 +8,21 @@ no dependencies. The game's interface is in German.
 ## Getting started
 
 ```
-node build.js      # writes dist/wortkreuz.html
+node build.js      # writes dist/index.html and dist/wortkreuz.html
 node test.js       # checks the word data and every generated level
 ```
 
-`dist/wortkreuz.html` contains the page without an `<html>` wrapper (that is how it is published
-as a Claude artifact). Any browser will open it as is; for a clean local copy, wrap it in a
-document with `<meta charset="utf-8">` and a viewport meta tag.
+The build writes two files: `dist/index.html` is the complete page for normal hosting or for
+opening locally in a browser. `dist/wortkreuz.html` is the same page without the `<html>` wrapper,
+which is the form a Claude artifact expects.
+
+## Deployment
+
+Every push to `main` runs `.github/workflows/pages.yml`, which tests, builds and publishes `dist/`
+to GitHub Pages. One-time setup: in the repository go to Settings → Pages and set Source to
+"GitHub Actions". The game is a static page, so any static host works as well.
+
+Progress is stored per web address: a player's save on one URL does not carry over to another.
 
 ## Structure
 

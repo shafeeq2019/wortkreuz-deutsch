@@ -12,4 +12,16 @@ ${scripts.map(f => '/* ===== ' + f + ' ===== */\n' + read(f)).join('\n')}</scrip
 `;
 fs.mkdirSync(path.join(__dirname, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(__dirname, 'dist', 'wortkreuz.html'), html);
+// Vollständige Seite für normales Hosting (GitHub Pages usw.). wortkreuz.html bleibt ohne Rahmen für das Claude-Artifact.
+const page = `<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kreuzworträtsel-Lernspiel für Deutsch: 100 Rätsel von A1 bis C1.">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+${html.replace('<div id="app">', '</head>\n<body>\n<div id="app">')}</body>
+</html>
+`;
+fs.writeFileSync(path.join(__dirname, 'dist', 'index.html'), page);
 console.log('dist/wortkreuz.html', (html.length / 1024).toFixed(0) + ' KB');
