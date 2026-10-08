@@ -1,54 +1,56 @@
 # Wortkreuz Deutsch
 
-Ein Kreuzworträtsel-Lernspiel zum Deutschlernen: 100 Rätsel von A1 bis C1, Wortliste mit Artikel,
-Übersetzung und Beispielsatz, Tagesrätsel, Übungsrätsel aus eigenen Wörtern, XP, Sterne, Lernserie
-und Erfolge. Läuft ohne Server und ohne Abhängigkeiten als eine einzige HTML-Seite.
+A crossword game for learning German: 100 puzzles from CEFR level A1 to C1, a personal word list
+with article, translation and example sentence, a daily puzzle, practice puzzles built from your
+own words, XP, stars, streaks and achievements. It runs as a single HTML page with no server and
+no dependencies. The game's interface is in German.
 
-## Starten
+## Getting started
 
 ```
-node build.js      # erzeugt dist/wortkreuz.html
-node test.js       # prüft die Wortdaten und alle generierten Levels
+node build.js      # writes dist/wortkreuz.html
+node test.js       # checks the word data and every generated level
 ```
 
-`dist/wortkreuz.html` enthält die Seite ohne `<html>`-Rahmen (so wird sie als Claude-Artifact
-veröffentlicht). Zum lokalen Öffnen reicht jeder Browser; sauberer ist ein Rahmen mit
-`<meta charset="utf-8">` und Viewport-Angabe darum.
+`dist/wortkreuz.html` contains the page without an `<html>` wrapper (that is how it is published
+as a Claude artifact). Any browser will open it as is; for a clean local copy, wrap it in a
+document with `<meta charset="utf-8">` and a viewport meta tag.
 
-## Aufbau
+## Structure
 
-| Datei | Aufgabe |
+| File | Purpose |
 | --- | --- |
-| `src/data/*.js` | Wortdatenbank, eine Datei pro Lernstufe |
-| `src/core.js` | Lernstufen, Wort-Parser, Zufall mit fester Saat |
-| `src/engine.js` | Kreuzworträtsel-Generator (ohne DOM) |
-| `src/levels.js` | Baut Levels, Tagesrätsel und Übungsrätsel aus den Wörtern |
-| `src/store.js` | Spielstand (LocalStorage), Lernserie, Ränge, Erfolge |
-| `src/game.js` | Spielregeln für ein laufendes Rätsel, Auswertung |
-| `src/ui.js`, `src/styles.css` | Oberfläche |
-| `build.js` | Fügt alles zu einer Seite zusammen |
-| `test.js` | Daten- und Levelprüfung |
-| `tools/` | Browser-Durchläufe mit Playwright (optional) |
+| `src/data/*.js` | Word bank, one file per level |
+| `src/core.js` | Levels (A1–C1), word parser, seeded random numbers |
+| `src/engine.js` | Crossword generator (no DOM) |
+| `src/levels.js` | Builds levels, daily puzzles and practice puzzles from the words |
+| `src/store.js` | Save game (LocalStorage), streak, ranks, achievements |
+| `src/game.js` | Rules for a running puzzle, scoring |
+| `src/ui.js`, `src/styles.css` | Interface |
+| `build.js` | Bundles everything into one page |
+| `test.js` | Data and level checks |
+| `tools/` | Browser playthroughs with Playwright (optional) |
 
-## Wörter hinzufügen
+## Adding words
 
-Eine Zeile pro Wort in der passenden Datei unter `src/data/`:
+One line per word in the matching file under `src/data/`:
 
 ```
 das Haus|house|Ein Gebäude. Dort wohnt man.|Wir wohnen in einem kleinen ___ mit Garten.
 ```
 
-Format: `[Artikel ]Wort|Englisch|Umschreibung|Beispielsatz mit ___`. Die Lösung darf 3 bis 11
-Buchstaben haben und weder in der Umschreibung noch im Beispielsatz vorkommen; `node test.js`
-prüft das. Es gibt keine handgebauten Levels: Neue Wörter ergeben automatisch neue Rätsel.
-Achtung: Dabei ändern sich die bestehenden Rätsel einer Stufe, weil die Wörter neu verteilt werden.
+Format: `[article ]word|English|German paraphrase|example sentence with ___`. The answer must be
+3 to 11 letters long and must not appear in the paraphrase or the example sentence; `node test.js`
+checks this. There are no hand-built levels: new words produce new puzzles automatically.
+Note that adding words changes the existing puzzles of that level, because the words are
+redistributed.
 
-Eine neue Lernstufe braucht einen Eintrag in `KW.STAGES` (`src/core.js`), eine Datendatei und
-deren Namen in `build.js` und `test.js`.
+A new level needs an entry in `KW.STAGES` (`src/core.js`), a data file, and that file's name in
+`build.js` and `test.js`.
 
-## Bekannte Grenzen
+## Known limits
 
-- In A2 bis C1 reicht der Wortschatz nicht ganz für 20 Levels ohne Wiederholung; die letzten
-  Levels sind als Wiederholung markiert. Rund 40 weitere Wörter je Stufe beheben das.
-- Der Spielstand liegt im Browser und wird nicht zwischen Geräten abgeglichen.
-- Hinweise und Beispielsätze sind nur formal geprüft, nicht von einer Lehrkraft gegengelesen.
+- In A2 to C1 the word bank is slightly too small for 20 levels without repeats; the last levels
+  are marked as review. About 40 more words per level would fix this.
+- Progress is stored in the browser and is not synced between devices.
+- Clues and example sentences have only been checked formally, not proofread by a teacher.
