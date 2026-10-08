@@ -12,7 +12,8 @@ ${scripts.map(f => '/* ===== ' + f + ' ===== */\n' + read(f)).join('\n')}</scrip
 `;
 fs.mkdirSync(path.join(__dirname, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(__dirname, 'dist', 'wortkreuz.html'), html);
-// Vollständige Seite für normales Hosting (GitHub Pages usw.). wortkreuz.html bleibt ohne Rahmen für das Claude-Artifact.
+// Vollständige Seite im Hauptordner: GitHub Pages veröffentlicht sie direkt aus dem Branch main.
+// dist/wortkreuz.html bleibt ohne Rahmen für das Claude-Artifact.
 const page = `<!doctype html>
 <html lang="de">
 <head>
@@ -23,5 +24,5 @@ const page = `<!doctype html>
 ${html.replace('<div id="app">', '</head>\n<body>\n<div id="app">')}</body>
 </html>
 `;
-fs.writeFileSync(path.join(__dirname, 'dist', 'index.html'), page);
+fs.writeFileSync(path.join(__dirname, 'index.html'), page);
 console.log('dist/wortkreuz.html', (html.length / 1024).toFixed(0) + ' KB');
