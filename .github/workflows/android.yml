@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -44,3 +44,15 @@ jobs:
             android/app/build/outputs/apk/debug/*.apk
             android/app/build/outputs/apk/release/*.apk
             android/app/build/outputs/bundle/release/*.aab
+      # Fester Download-Link für das Handy: Releases → "Android-App (neueste Version)".
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/debug/app-debug.apk out/wortkreuz-deutsch.apk
+          cp android/app/build/outputs/bundle/release/app-release.aab out/wortkreuz-deutsch.aab
+          gh release delete android-latest --yes --cleanup-tag || true
+          gh release create android-latest out/* --target "$GITHUB_SHA" --prerelease \
+            --title "Android-App (neueste Version)" \
+            --notes "wortkreuz-deutsch.apk zum direkten Installieren auf dem Handy, wortkreuz-deutsch.aab für Google Play. Gebaut aus ${GITHUB_SHA::7} (${GITHUB_REF_NAME})."
