@@ -1,0 +1,58 @@
+name: Android
+
+on:
+  push:
+    paths: ['src/**', 'build.js', 'index.html', 'android/**', '.github/workflows/android.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: node build.js
+      # Mit den Secrets WORTKREUZ_KEYSTORE_BASE64 usw. wird die Release-Version signiert (für Google Play).
+      - name: Keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.WORTKREUZ_KEYSTORE_BASE64 }}
+        if: env.KEYSTORE_BASE64 != ''
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          echo "WORTKREUZ_KEYSTORE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+      - name: Build
+        working-directory: android
+        env:
+          WORTKREUZ_STORE_PASSWORD: ${{ secrets.WORTKREUZ_STORE_PASSWORD }}
+          WORTKREUZ_KEY_ALIAS: ${{ secrets.WORTKREUZ_KEY_ALIAS }}
+          WORTKREUZ_KEY_PASSWORD: ${{ secrets.WORTKREUZ_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon assembleDebug assembleRelease bundleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wortkreuz-android
+          path: |
+            android/app/build/outputs/apk/debug/*.apk
+            android/app/build/outputs/apk/release/*.apk
+            android/app/build/outputs/bundle/release/*.aab
+      # Fester Download-Link für das Handy: Releases → "Android-App (neueste Version)".
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p out
+          cp android/app/build/outputs/apk/debug/app-debug.apk out/wortkreuz-deutsch.apk
+          cp android/app/build/outputs/bundle/release/app-release.aab out/wortkreuz-deutsch.aab
+          gh release delete android-latest --yes --cleanup-tag || true
+          gh release create android-latest out/* --target "$GITHUB_SHA" --prerelease \
+            --title "Android-App (neueste Version)" \
+            --notes "wortkreuz-deutsch.apk zum direkten Installieren auf dem Handy, wortkreuz-deutsch.aab für Google Play. Gebaut aus ${GITHUB_SHA::7} (${GITHUB_REF_NAME})."
