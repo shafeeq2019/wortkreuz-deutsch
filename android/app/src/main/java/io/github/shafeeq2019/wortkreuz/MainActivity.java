@@ -9,6 +9,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 
 import androidx.activity.ComponentActivity;
 import androidx.activity.EdgeToEdge;
@@ -36,11 +37,15 @@ public class MainActivity extends ComponentActivity {
         EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
+        // Die WebView liegt in einem Rahmen: Innenabstand an der WebView selbst ignoriert sie beim Zeichnen.
+        FrameLayout frame = new FrameLayout(this);
         web = new WebView(this);
-        setContentView(web);
+        frame.addView(web, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        setContentView(frame);
 
         // Die Seite liegt nicht unter Status- und Navigationsleiste oder der Tastatur.
-        ViewCompat.setOnApplyWindowInsetsListener(web, (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(frame, (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars()
                     | WindowInsetsCompat.Type.displayCutout() | WindowInsetsCompat.Type.ime());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
