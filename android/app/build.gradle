@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Die Seite wird nicht doppelt eingecheckt: der Build kopiert das von build.js erzeugte index.html.
+def webDir = layout.buildDirectory.dir('generated/web')
+def copyWeb = tasks.register('copyWeb', Copy) {
+    from(rootProject.file('../index.html'))
+    into(webDir)
+}
+
+// Signatur für die Veröffentlichung: android/keystore.properties oder Umgebungsvariablen (CI).
+def keystoreProps = new Properties()
+def keystoreFile = rootProject.file('keystore.properties')
+if (keystoreFile.exists()) keystoreFile.withInputStream { keystoreProps.load(it) }
+def signingValue = { String key, String env -> keystoreProps.getProperty(key) ?: System.getenv(env) }
+def storePath = signingValue('storeFile', 'WORTKREUZ_KEYSTORE')
+
+android {
+    namespace 'io.github.shafeeq2019.wortkreuz'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'io.github.shafeeq2019.wortkreuz'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    signingConfigs {
+        if (storePath) {
+            release {
+                storeFile file(storePath)
+                storePassword signingValue('storePassword', 'WORTKREUZ_STORE_PASSWORD')
+                keyAlias signingValue('keyAlias', 'WORTKREUZ_KEY_ALIAS')
+                keyPassword signingValue('keyPassword', 'WORTKREUZ_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            if (storePath) signingConfig signingConfigs.release
+        }
+    }
+
+    sourceSets {
+        main.assets.srcDirs += webDir
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+tasks.named('preBuild') { dependsOn copyWeb }
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.14.0'
+    implementation 'androidx.activity:activity:1.10.1'
+}

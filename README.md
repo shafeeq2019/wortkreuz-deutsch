@@ -27,6 +27,27 @@ static page, so any static host works as well.
 
 Progress is stored per web address: a player's save on one URL does not carry over to another.
 
+## Android app
+
+`android/` wraps the built `index.html` in a WebView app (package `io.github.shafeeq2019.wortkreuz`,
+Android 8 and newer). The game runs offline; the save game stays on the device.
+
+The **Android** workflow builds it on every push and uploads the artifact `wortkreuz-android`:
+a debug APK to install directly, and a release APK and AAB (the format Google Play requires).
+To build locally with the Android SDK: `node build.js`, then `cd android && ./gradlew assembleDebug`.
+
+For Google Play the release build must be signed. Create an upload key once and keep it safe:
+
+```
+keytool -genkeypair -v -keystore upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000
+```
+
+Then add these repository secrets (Settings → Secrets and variables → Actions):
+`WORTKREUZ_KEYSTORE_BASE64` (output of `base64 -w0 upload.jks`), `WORTKREUZ_STORE_PASSWORD`,
+`WORTKREUZ_KEY_ALIAS` (`upload`) and `WORTKREUZ_KEY_PASSWORD`. Locally, an
+`android/keystore.properties` with `storeFile`, `storePassword`, `keyAlias` and `keyPassword` does
+the same. Raise `versionCode` in `android/app/build.gradle` for every upload to Play.
+
 ## Structure
 
 | File | Purpose |
